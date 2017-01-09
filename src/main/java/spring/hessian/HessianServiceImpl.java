@@ -9,7 +9,7 @@ import java.util.HashMap;
 /*
  * 智慧服务接口实现类
  */
-//@Service("hessianService")
+@Service("hessianService")
 public class HessianServiceImpl implements HessianService {
 	private static Log log = LogFactory.getLog(HessianServiceImpl.class);
 

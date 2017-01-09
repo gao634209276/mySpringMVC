@@ -12,16 +12,16 @@
 
 	<context:component-scan base-package="spring"/>
 	<!-- 业务类，可以设置为自动装配 -->
-	<bean id="hessianService" class="spring.hessian.HessianServiceImpl"/>
+	<!--<bean id="hessianService" class="spring.hessian.HessianServiceImpl"/>-->
 	<mvc:annotation-driven/>
 	<mvc:default-servlet-handler/>
 
 	<!-- 远程服务，采用hessian序列化，数据量最小  -->
-	<bean name="/hessianService" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<!--service和serviceInterface固定写法-->
+<!--	<bean name="/hessianService" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		&lt;!&ndash;service和serviceInterface固定写法&ndash;&gt;
 		<property name="service" ref="hessianService"/>
 		<property name="serviceInterface" value="spring.hessian.HessianService"/>
-	</bean>
+	</bean>-->
 
 
 <!--
