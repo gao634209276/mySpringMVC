@@ -41,10 +41,8 @@ public class HessianServiceImpl implements HessianService {
 
 
 		String sql = Parse.parseSQL(label);
-		//log.info(query);
-
+		log.info(sql);
 		//todo jdbc
-
 
 		if (source.equals("1")) {
 			String path = fileName;
