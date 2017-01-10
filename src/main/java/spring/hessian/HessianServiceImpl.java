@@ -40,7 +40,7 @@ public class HessianServiceImpl implements HessianService {
 	public HashMap<String, String> queryResult(String settingId, HashMap<String, String> label, String source, String fileName) {
 
 
-		String sql = Parse.parse(label);
+		String sql = Parse.parseSQL(label);
 		//log.info(query);
 
 		//todo jdbc
