@@ -3,26 +3,53 @@ package spring.hessian;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
+import spring.hessian.utils.Parse;
 
-import java.util.HashMap;
+import java.util.*;
 
 /*
  * 智慧服务接口实现类
  */
-@Service("hessianService")
+@Service
 public class HessianServiceImpl implements HessianService {
 	private static Log log = LogFactory.getLog(HessianServiceImpl.class);
 
 	private static final String HTABLE = "t_ods_3hall_to_zhfw_hbase";
 
+	//private static String[] a = {"a", "b"};
 	public String sayHello(String username) {
 		return "Hello " + username;
 	}
 
-	public HashMap<String, String> queryResult(String user_mobile, String codes, String datetime) {
-		log.info("智慧服务查询接口,hbase table：" + HTABLE + "   手机号码：" + user_mobile + ",   业务编码：" + codes);
+	/**
+	 * @param settingId
+	 * @param label     province:a,b,c
+	 *                  netType:2G,3G,4G
+	 *                  payType:0,1
+	 *                  packageId:
+	 *                  age:-50
+	 *                  netTime:20160501-
+	 *                  netAge:
+	 *                  netUseFrequ:1-4,10-
+	 *                  mobUseFrequ:4,
+	 * @param source
+	 * @param fileName
+	 * @return
+	 */
+	@Override
+	public HashMap<String, String> queryResult(String settingId, HashMap<String, String> label, String source, String fileName) {
 
-		log.info("zhfw result:" + "");
+
+		String sql = Parse.parse(label);
+		//log.info(query);
+
+		//todo jdbc
+
+
+		if (source.equals("1")) {
+			String path = fileName;
+			//todo jdbc
+		}
 		return null;
 	}
 }
