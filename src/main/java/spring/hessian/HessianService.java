@@ -10,10 +10,11 @@ public interface HessianService {
 	public String sayHello(String username);
 
 	/**
-	 * settingId:String,len=20
-	 * label:String
-	 * source:String,1:独立完成,不需要其他渠道协助;2:需要其他渠道数据辅助完成
-	 * filename:String,其他渠道的ftp文件path
+	 * @param settingId len=20
+	 * @param label     标签数据
+	 * @param source    1:独立完成,不需要其他渠道协助;2:需要其他渠道数据辅助完成
+	 * @param fileName  其他渠道的ftp文件path
+	 * @return
 	 */
-	public HashMap<String, String> queryResult(String settingId, HashMap<String, String> label, String source, String fileName);
+	public HashMap<String, String> queryResult(String settingId, Map<String, String> label, String source, String fileName);
 }

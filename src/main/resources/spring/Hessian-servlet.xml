@@ -9,40 +9,12 @@
 	   http://www.springframework.org/schema/context/spring-context.xsd
 	   http://www.springframework.org/schema/mvc
 	   http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-
 	<context:component-scan base-package="spring"/>
-	<!-- 业务类，可以设置为自动装配 -->
-	<!--<bean id="hessianService" class="spring.hessian.HessianServiceImpl"/>-->
 	<mvc:annotation-driven/>
 	<mvc:default-servlet-handler/>
 
-	<!-- 远程服务，采用hessian序列化，数据量最小  -->
 	<bean name="/hessianService" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<!--service和serviceInterface固定写法-->
 		<property name="service" ref="hessianServiceImpl"/>
 		<property name="serviceInterface" value="spring.hessian.HessianService"/>
 	</bean>
-
-
-<!--
-	<bean id="beanNameUrlHandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
-	&lt;!&ndash; 类似rmi方式，采用java序列化，数据量较大 &ndash;&gt;
-	<bean name="/httpInvokerService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="remoteService"/>
-		<property name="serviceInterface" value="spring.http.RemoteService"/>
-	</bean>
-
-	&lt;!&ndash; xml传输数据，数据量比httpinvoker方式小 &ndash;&gt;
-	<bean name="/burlapService" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="remoteService"/>
-		<property name="serviceInterface" value="spring.http.RemoteService"/>
-	</bean>
--->
-
-<!--	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/**"/>
-			<bean class="com.plateno.interceptor.CommonInterceptor"/>
-		</mvc:interceptor>
-	</mvc:interceptors>-->
 </beans>

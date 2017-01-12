@@ -17,7 +17,6 @@
 		<param-value>production</param-value>
 	</context-param>
 
-
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -66,13 +65,4 @@
 		<servlet-name>hessianService</servlet-name>
 		<url-pattern>/hessian/*</url-pattern>
 	</servlet-mapping>
-
-	<!--<servlet>
-		<servlet-name>Controller</servlet-name>
-		<servlet-class>servlet.controller.MainController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Controller</servlet-name>
-		<url-pattern>/login</url-pattern>
-	</servlet-mapping>-->
 </web-app>

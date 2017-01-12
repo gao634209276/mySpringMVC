@@ -1,6 +1,5 @@
 package spring.controller;
 
-import com.caucho.hessian.client.HessianProxyFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -10,9 +9,7 @@ import spring.hessian.HessianService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 /**
  * 采用注解的方式，可以明确地定义该类为处理请求的Controller类
@@ -51,6 +48,4 @@ public class MainController {
         // 处理完该请求后返回的页面，此请求返回 index.jsp页面
         return "result";
     }
-
-
 }
