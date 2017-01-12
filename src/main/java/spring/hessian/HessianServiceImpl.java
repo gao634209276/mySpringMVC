@@ -15,9 +15,6 @@ import java.util.*;
 public class HessianServiceImpl implements HessianService {
     private static Log log = LogFactory.getLog(HessianServiceImpl.class);
 
-    private static final String HTABLE = "t_ods_3hall_to_zhfw_hbase";
-
-    //private static String[] a = {"a", "b"};
     public String sayHello(String username) {
         log.info("Hello " + username);
         return "Hello " + username;
