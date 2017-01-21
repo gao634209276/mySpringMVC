@@ -37,15 +37,9 @@ public class MainController {
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     public String hessian(HttpServletRequest request) throws IOException, ServletException {
         // 获取hession的get请求，创建远程代理HessianService，通过hessian RPC进行调用远程服务
-        //String url = "http://localhost:8080/hessian/hessianService";
-        //String url = "http://10.70.51.11/sinova/hessian/hessianService";
-        //HessianProxyFactory factory = new HessianProxyFactory();
-        //HessianService hessianServer = (HessianService) factory.create(HessianService.class, url);
         String args = request.getParameter("args");
         String result = hessianServer.sayHello(args);
         System.out.println(result);
-        // request.getRequestDispatcher("result.jsp").forward(request, resp);
-        // 处理完该请求后返回的页面，此请求返回 index.jsp页面
         return "result";
     }
 }
