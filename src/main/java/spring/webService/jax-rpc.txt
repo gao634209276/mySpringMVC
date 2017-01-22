@@ -1,0 +1,37 @@
+1.5.1. 使用JAX-RPC暴露基于servlet的web服务
+Spring为JAX-RPC servlet的端点实现提供了一个方便的基类 - ServletEndpointSupport.
+未来暴露我们的AccountService我们扩展Spring的ServletEndpointSupport类并在这里实现了我们的业务逻辑，通常将调用交给业务层。
+
+/**
+ * JAX-RPC compliant RemoteAccountService implementation that simply delegates
+ * to the AccountService implementation in the root web application context.
+ *
+ * This wrapper class is necessary because JAX-RPC requires working with dedicated
+ * endpoint classes. If an existing service needs to be exported, a wrapper that
+ * extends ServletEndpointSupport for simple application context access is
+ * the simplest JAX-RPC compliant way.
+ *
+ * This is the class registered with the server-side JAX-RPC implementation.
+ * In the case of Axis, this happens in "server-config.wsdd" respectively via
+ * deployment calls. The web service engine manages the lifecycle of instances
+ * of this class: A Spring application context can just be accessed here.
+ */import org.springframework.remoting.jaxrpc.ServletEndpointSupport;
+
+public class AccountServiceEndpoint extends ServletEndpointSupport implements RemoteAccountService {
+
+    private AccountService biz;
+
+    protected void onInit() {
+        this.biz = (AccountService) getWebApplicationContext().getBean("accountService");
+    }
+
+    public void insertAccount(Account acc) throws RemoteException {
+        biz.insertAccount(acc);
+    }
+
+    public Account[] getAccounts(String name) throws RemoteException {
+        return biz.getAccounts(name);
+    }
+}
+
+AccountServletEndpoint需要在Spring中同一个上下文的web应用里运行，以获得对Spring的访问能力。如果使用Axis，把AxisServlet定义复制到你的'web.xml'中，并且在'server-config.wsdd'中设置端点（或使用发布工具）。参看JPetStore这个例子中OrderService是如何用Axis发布成一个Web服务的。

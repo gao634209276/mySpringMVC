@@ -1,0 +1,58 @@
+使用RMI暴露服务
+使用Spring的RMI支持，你可以通过RMI基础设施透明的暴露你的服务。
+设置好Spring的RMI支持后，你会看到一个和远程EJB接口类似的配置，只是没有对安全上下文传递和远程事务传递的标准支持。
+当使用RMI调用器时，Spring对这些额外的调用上下文提供了钩子，你可以在此插入安全框架或者定制的安全证书。
+1.2.1. 使用RmiServiceExporter暴露服务
+使用RmiServiceExporter，我们可以把AccountService对象的接口暴露成RMI对象。
+可以使用 RmiProxyFactoryBean 或者在传统RMI服务中使用普通RMI来访问该接口。
+RmiServiceExporter 显式地支持使用RMI调用器暴露任何非RMI的服务。
+当然，我们首先需要在Spring容器中设置我们的服务：
+
+	<bean id="accountService" class="example.AccountServiceImpl">
+		<!--其他属性，或者一个DAO对象？-->
+	</bean>
+
+然后我们要使用RmiServiceExporter来暴露我们的服务：
+
+	<bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+		<!-- 不一定要与要输出的bean同名-->
+		<property name="serviceName" value="AccountService"/>
+		<property name="service" ref="accountService"/>
+		<property name="serviceInterface" value="example.AccountService"/>
+		<!--  默认为1199-->
+		<property name="registryPort" value="1199"/>
+	</bean>
+
+正如你所见，我们覆盖了RMI注册的端口号。通常你的应用服务器也会维护RMI注册，最好不要和它冲突。
+更进一步来说，服务名是用来绑定服务的。所以本例中，服务绑定在rmi://HOST:1199/AccountService。
+在客户端我们将使用这个URL来链接到服务。
+Note
+	servicePort 属性被省略了(它的默认值为0).这表示在与服务通信时将使用匿名端口.
+
+
+1.2.2. 在客户端链接服务
+我们的客户端是一个使用AccountService来管理account的简单对象：
+
+	public class SimpleObject {
+
+		private AccountService accountService;
+
+		public void setAccountService(AccountService accountService) {
+			this.accountService = accountService;
+		}
+	}
+
+为了把服务连接到客户端上，我们将创建一个单独的Spring容器，包含这个简单对象和链接配置位的服务：
+
+	<bean class="example.SimpleObject">
+		<property name="accountService" ref="accountService"/>
+	</bean>
+
+	<bean id="accountService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+		<property name="serviceUrl" value="rmi://HOST:1199/AccountService"/>
+		<property name="serviceInterface" value="example.AccountService"/>
+	</bean>
+
+这就是我们在客户端为支持远程account服务所需要做的。
+Spring将透明的创建一个调用器并且通过RmiServiceExporter使得account服务支持远程服务。
+在客户端，我们用RmiProxyFactoryBean连接它。
