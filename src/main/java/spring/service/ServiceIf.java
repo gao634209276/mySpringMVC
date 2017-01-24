@@ -1,8 +1,8 @@
-package spring.rmi;
+package spring.service;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public interface RmiService {
+public interface ServiceIf {
 	public String sayHello();
 }

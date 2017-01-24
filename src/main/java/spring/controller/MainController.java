@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import spring.hessian.HessianService;
+import spring.service.ServiceIf;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +18,8 @@ import java.io.IOException;
 public class MainController {
 
     @Autowired
-    @Qualifier(value = "hessianServiceImpl")
-    private HessianService hessianServer;
+    @Qualifier(value = "serviceImpl")
+    private ServiceIf service;
 
     // 定义一个请求映射,value为请求的url为/说明，该请求首页请求，method用以指定该请求类型，一般为get和post；
     @RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -38,7 +38,7 @@ public class MainController {
     public String hessian(HttpServletRequest request) throws IOException, ServletException {
         // 获取hession的get请求，创建远程代理HessianService，通过hessian RPC进行调用远程服务
         String args = request.getParameter("args");
-        String result = hessianServer.sayHello(args);
+        String result = service.sayHello();
         System.out.println(result);
         return "result";
     }

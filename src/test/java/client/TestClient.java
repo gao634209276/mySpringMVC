@@ -4,10 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import spring.burlap.BurlapService;
-import spring.hessian.HessianService;
-import spring.httpInvoker.HttpInvokerService;
-import spring.rmi.RmiService;
+import spring.service.ServiceIf;
 import spring.webService.MyServiceEndpoint;
 
 import javax.xml.namespace.QName;
@@ -33,7 +30,7 @@ public class TestClient {
 	 */
 	@Test
 	public void testRmi() {
-		RmiService service = (RmiService) context.getBean("rmiProxyFactoryBean");
+		ServiceIf service = (ServiceIf) context.getBean("rmiProxyFactoryBean");
 		System.out.println(service.sayHello());
 	}
 
@@ -43,7 +40,7 @@ public class TestClient {
 	 */
 	@Test
 	public void testHttpInvoker() {
-		HttpInvokerService httpInvoke = context.getBean("httpInvokerService", HttpInvokerService.class);
+		ServiceIf httpInvoke = context.getBean("httpInvokerService", ServiceIf.class);
 		httpInvoke.sayHello();
 	}
 
@@ -53,8 +50,8 @@ public class TestClient {
 	 */
 	@Test
 	public void testHessian() {
-		HessianService service = context.getBean(HessianService.class);
-		service.sayHello("test");
+		ServiceIf service = context.getBean(ServiceIf.class);
+		service.sayHello();
 	}
 
 	/**
@@ -64,8 +61,8 @@ public class TestClient {
 	 */
 	@Test
 	public void testBurlap() {
-		BurlapService service = context.getBean(BurlapService.class);
-		service.sayHello("test");
+		ServiceIf service = context.getBean(ServiceIf.class);
+		service.sayHello();
 	}
 
 	@Test

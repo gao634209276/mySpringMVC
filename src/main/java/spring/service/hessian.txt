@@ -1,6 +1,5 @@
  使用Hessian或者Burlap通过HTTP远程调用服务
 
-
 Hessian提供一种基于HTTP的二进制远程协议。它是由Caucho开发的，可以在 http://www.caucho.com 找到更多有关Hessian的信息。
 1.3.1. 为Hessian和co.配置DispatcherServlet
 

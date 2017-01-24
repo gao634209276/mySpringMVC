@@ -17,28 +17,28 @@
 
 	<!--Remote Site conf Bean-->
 	<!--<bean id="accountService" class="spring.rmi.AccountServiceImpl"/>-->
-	<bean class="org.springframework.remoting.rmi.RmiServiceExporter">
-		<!-- 不一定要与要输出的bean同名-->
+	<!--<bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+		&lt;!&ndash; 不一定要与要输出的bean同名&ndash;&gt;
 		<property name="serviceName" value="RmiService"/>
-		<property name="service" ref="rmiServiceImpl"/>
-		<property name="serviceInterface" value="spring.rmi.RmiService"/>
-		<!--  默认为1199-->
+		<property name="service" ref="serviceImpl"/>
+		<property name="serviceInterface" value="spring.service.ServiceIf"/>
+		&lt;!&ndash;  默认为1199&ndash;&gt;
 		<property name="registryPort" value="1199"/>
-	</bean>
+	</bean>-->
 	<!--  使用HTTP调用器暴露服务,类似rmi方式,采用java序列化,数据量较大 -->
 	<bean name="/httpInvokerService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="httpInvokerImpl"/>
-		<property name="serviceInterface" value="spring.httpInvoker.HttpInvokerService"/>
+		<property name="service" ref="serviceImpl"/>
+		<property name="serviceInterface" value="spring.service.ServiceIf"/>
 	</bean>
 	<!-- xml传输数据，数据量比httpinvoker方式小 -->
 	<bean name="/burlapService" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="BurlapServiceImpl"/>
-		<property name="serviceInterface" value="spring.burlap.BurlapService"/>
+		<property name="service" ref="serviceImpl"/>
+		<property name="serviceInterface" value="spring.service.ServiceIf"/>
 	</bean>
 	<!--  远程服务，采用hessian序列化，数据量最小 -->
 	<bean name="/hessianService" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="hessianServiceImpl"/>
-		<property name="serviceInterface" value="spring.hessian.HessianService"/>
+		<property name="service" ref="serviceImpl"/>
+		<property name="serviceInterface" value="spring.service.ServiceIf"/>
 	</bean>
 
 	<!--<bean id="accountWebService" class="org.springframework.remoting.jaxrpc.JaxRpcPortProxyFactoryBean">
@@ -58,20 +58,20 @@
 
 	<!--Client Site conf Bean-->
 	<!--为了把rmi服务连接到客户端上，我们将创建一个单独的Spring容器，包含这个简单对象和链接配置位的服务：-->
-	<bean id="rmiProxyFactoryBean" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+	<!--<bean id="rmiProxyFactoryBean" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
 		<property name="serviceUrl" value="rmi://localhost:1199/remote/rmiService"/>
-		<property name="serviceInterface" value="spring.rmi.RmiService"/>
-	</bean>
+		<property name="serviceInterface" value="spring.service.ServiceIf"/>
+	</bean>-->
 	<bean id="httpInvokerProxyFactoryBean" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
 		<property name="serviceUrl" value="http://localhost:8080/remote/httpInvokerService"/>
-		<property name="serviceInterface" value="spring.httpInvoker.HttpInvokerService"/>
+		<property name="serviceInterface" value="spring.service.ServiceIf"/>
 	</bean>
 	<bean id="burlapProxyFactoryBean" class="org.springframework.remoting.caucho.BurlapProxyFactoryBean">
 		<property name="serviceUrl" value="http://localhost:8080/remote/BurlapService"/>
-		<property name="serviceInterface" value="spring.burlap.BurlapService"/>
+		<property name="serviceInterface" value="spring.service.ServiceIf"/>
 	</bean>
 	<bean id="hessianProxyFactoryBean" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
 		<property name="serviceUrl" value="http://localhost:8080/remote/hessianService"/>
-		<property name="serviceInterface" value="spring.hessian.HessianService"/>
+		<property name="serviceInterface" value="spring.service.ServiceIf"/>
 	</bean>
 </beans>
