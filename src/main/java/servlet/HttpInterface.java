@@ -25,8 +25,6 @@ public class HttpInterface extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
-
 		//获取HTTP请求中的参数信息
 		String method = request.getParameter("method");
 		//生成HTTP响应结果
