@@ -3,6 +3,6 @@ package spring.service;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface ServiceIf {
-	public String sayHello();
+public interface HelloService {
+	public String sayHello(String name);
 }

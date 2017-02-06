@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import spring.service.ServiceIf;
+import spring.service.HelloService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +18,8 @@ import java.io.IOException;
 public class MainController {
 
     @Autowired
-    @Qualifier(value = "serviceImpl")
-    private ServiceIf service;
+    @Qualifier(value = "helloServiceImpl")
+    private HelloService service;
 
     // 定义一个请求映射,value为请求的url为/说明，该请求首页请求，method用以指定该请求类型，一般为get和post；
     @RequestMapping(value = "/index", method = RequestMethod.GET)

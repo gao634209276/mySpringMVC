@@ -9,6 +9,7 @@
 	   http://www.springframework.org/schema/context/spring-context.xsd
 	   http://www.springframework.org/schema/mvc
 	   http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<!---scan标签指定了查找组件的包名-->
 	<context:component-scan base-package="spring"/>
 	<!-- 业务类，可以设置为自动装配 -->
 	<mvc:annotation-driven/>
@@ -27,19 +28,30 @@
 	</bean>-->
 	<!--  使用HTTP调用器暴露服务,类似rmi方式,采用java序列化,数据量较大 -->
 	<bean name="/httpInvokerService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="serviceImpl"/>
-		<property name="serviceInterface" value="spring.service.ServiceIf"/>
+		<property name="service" ref="helloServiceImpl"/>
+		<property name="serviceInterface" value="spring.service.HelloService"/>
 	</bean>
 	<!-- xml传输数据，数据量比httpinvoker方式小 -->
 	<bean name="/burlapService" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="serviceImpl"/>
-		<property name="serviceInterface" value="spring.service.ServiceIf"/>
+		<property name="service" ref="helloServiceImpl"/>
+		<property name="serviceInterface" value="spring.service.HelloService"/>
 	</bean>
 	<!--  远程服务，采用hessian序列化，数据量最小 -->
 	<bean name="/hessianService" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="serviceImpl"/>
-		<property name="serviceInterface" value="spring.service.ServiceIf"/>
+		<property name="service" ref="helloServiceImpl"/>
+		<property name="serviceInterface" value="spring.service.HelloService"/>
 	</bean>
+	<!--SimpleJaxWsServiceExporter类的baseAddress属性用于指定webservice的根路径-->
+	<!--完整的web服务地址=根路径+WebService名称-->
+	<bean class="org.springframework.remoting.jaxws.SimpleJaxWsServiceExporter">
+		<property name="baseAddress" value="http://localhost:8080/remote/webService"/>
+	</bean>
+
+	<!--<wss:binding url="/getNameWS">
+		<wss:service>
+			<ws:service bean="#getNameWSImpl" /> &lt;!&ndash;注入实现类&ndash;&gt;
+		</wss:service>
+	</wss:binding>-->
 
 	<!--<bean id="accountWebService" class="org.springframework.remoting.jaxrpc.JaxRpcPortProxyFactoryBean">
 		<property name="serviceInterface" value="example.RemoteAccountService"/>
@@ -64,14 +76,14 @@
 	</bean>-->
 	<bean id="httpInvokerProxyFactoryBean" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
 		<property name="serviceUrl" value="http://localhost:8080/remote/httpInvokerService"/>
-		<property name="serviceInterface" value="spring.service.ServiceIf"/>
+		<property name="serviceInterface" value="spring.service.HelloService"/>
 	</bean>
 	<bean id="burlapProxyFactoryBean" class="org.springframework.remoting.caucho.BurlapProxyFactoryBean">
 		<property name="serviceUrl" value="http://localhost:8080/remote/BurlapService"/>
-		<property name="serviceInterface" value="spring.service.ServiceIf"/>
+		<property name="serviceInterface" value="spring.service.HelloService"/>
 	</bean>
 	<bean id="hessianProxyFactoryBean" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
 		<property name="serviceUrl" value="http://localhost:8080/remote/hessianService"/>
-		<property name="serviceInterface" value="spring.service.ServiceIf"/>
+		<property name="serviceInterface" value="spring.service.HelloService"/>
 	</bean>
 </beans>

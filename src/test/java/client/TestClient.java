@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import spring.service.ServiceIf;
+import spring.service.HelloService;
 import spring.webService.MyServiceEndpoint;
 
 import javax.xml.namespace.QName;
@@ -30,8 +30,8 @@ public class TestClient {
 	 */
 	@Test
 	public void testRmi() {
-		ServiceIf service = (ServiceIf) context.getBean("rmiProxyFactoryBean");
-		System.out.println(service.sayHello());
+		HelloService service = (HelloService) context.getBean("rmiProxyFactoryBean");
+		System.out.println(service.sayHello("world"));
 	}
 
 	/**
@@ -40,8 +40,8 @@ public class TestClient {
 	 */
 	@Test
 	public void testHttpInvoker() {
-		ServiceIf httpInvoke = context.getBean("httpInvokerService", ServiceIf.class);
-		httpInvoke.sayHello();
+		HelloService httpInvoke = context.getBean("httpInvokerService", HelloService.class);
+		httpInvoke.sayHello("world");
 	}
 
 	/**
@@ -50,8 +50,8 @@ public class TestClient {
 	 */
 	@Test
 	public void testHessian() {
-		ServiceIf service = context.getBean(ServiceIf.class);
-		service.sayHello();
+		HelloService service = context.getBean(HelloService.class);
+		service.sayHello("world");
 	}
 
 	/**
@@ -61,8 +61,8 @@ public class TestClient {
 	 */
 	@Test
 	public void testBurlap() {
-		ServiceIf service = context.getBean(ServiceIf.class);
-		service.sayHello();
+		HelloService service = context.getBean(HelloService.class);
+		service.sayHello("world");
 	}
 
 	@Test

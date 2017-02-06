@@ -17,7 +17,7 @@ public class MyServiceEndpoint extends SpringBeanAutowiringSupport {
 	MyWebService myService;
 
 	@WebMethod
-	public String sayHello() {
-		return myService.sayHello();
+	public String sayHello(String name) {
+		return myService.sayHello(name);
 	}
 }

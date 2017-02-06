@@ -16,7 +16,7 @@
 		<param-name>spring.profiles.default</param-name>
 		<param-value>production</param-value>
 	</context-param>
-
+	<!--添加spring的监听器配置-->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -90,4 +90,7 @@
 		<servlet-name>HttpInterface-servlet</servlet-name>
 		<url-pattern>/http/httpInterface</url-pattern>
 	</servlet-mapping>
+
+	<!--web Service-->
+
 </web-app>

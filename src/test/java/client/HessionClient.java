@@ -1,7 +1,7 @@
 package client;
 
 import com.caucho.hessian.client.HessianProxyFactory;
-import spring.service.ServiceIf;
+import spring.service.HelloService;
 
 import java.net.MalformedURLException;
 
@@ -12,7 +12,7 @@ public class HessionClient {
 	public static void main(String[] args) throws MalformedURLException {
 		String url = "http://localhost:8008/remote/hessianService";
 		HessianProxyFactory factory = new HessianProxyFactory();
-		ServiceIf hessianServer = (ServiceIf) factory.create(ServiceIf.class, url);
+		HelloService hessianServer = (HelloService) factory.create(HelloService.class, url);
 		String ret = hessianServer.sayHello();
 		System.out.println(ret);
 	}
