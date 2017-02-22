@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xmlns:context="http://www.springframework.org/schema/context"
-	   xmlns:mvc="http://www.springframework.org/schema/mvc"
-	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
 	   http://www.springframework.org/schema/beans/spring-beans.xsd
 	   http://www.springframework.org/schema/context
 	   http://www.springframework.org/schema/context/spring-context.xsd
@@ -14,6 +14,7 @@
 	<!-- 业务类，可以设置为自动装配 -->
 	<mvc:annotation-driven/>
 	<mvc:default-servlet-handler/>
+	<import resource="dubboprovide.xml"/>
 
 
 	<!--Remote Site conf Bean-->
@@ -43,9 +44,10 @@
 	</bean>
 	<!--SimpleJaxWsServiceExporter类的baseAddress属性用于指定webservice的根路径-->
 	<!--完整的web服务地址=根路径+WebService名称-->
-	<bean class="org.springframework.remoting.jaxws.SimpleJaxWsServiceExporter">
+	<!--<bean class="org.springframework.remoting.jaxws.SimpleJaxWsServiceExporter">
 		<property name="baseAddress" value="http://localhost:8080/remote/webService"/>
-	</bean>
+	</bean>-->
+
 
 	<!--<wss:binding url="/getNameWS">
 		<wss:service>
@@ -86,4 +88,5 @@
 		<property name="serviceUrl" value="http://localhost:8080/remote/hessianService"/>
 		<property name="serviceInterface" value="spring.service.HelloService"/>
 	</bean>
+
 </beans>

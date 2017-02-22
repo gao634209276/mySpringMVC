@@ -13,7 +13,7 @@ public class HessionClient {
 		String url = "http://localhost:8008/remote/hessianService";
 		HessianProxyFactory factory = new HessianProxyFactory();
 		HelloService hessianServer = (HelloService) factory.create(HelloService.class, url);
-		String ret = hessianServer.sayHello();
+		String ret = hessianServer.sayHello("test");
 		System.out.println(ret);
 	}
 }

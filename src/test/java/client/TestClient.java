@@ -73,6 +73,6 @@ public class TestClient {
 
 		Service service = Service.create(new QName("http://endpoint.king.pac/", "testMyService"));
 		QName q = new QName("http://endpoint.king.pac/", "MyServiceEndpointPort");
-
 	}
+
 }
