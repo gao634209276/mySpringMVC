@@ -10,7 +10,7 @@ public class DubboClient {
 
 	@Before
 	public void before() {
-		context = new ClassPathXmlApplicationContext("classpath:dubboconsumer.xml");
+		context = new ClassPathXmlApplicationContext("classpath:rpc/dubboconsumer.xml");
 	}
 
 	@Test
