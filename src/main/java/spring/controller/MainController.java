@@ -38,7 +38,7 @@ public class MainController {
     public String hessian(HttpServletRequest request) throws IOException, ServletException {
         // 获取hession的get请求，创建远程代理HessianService，通过hessian RPC进行调用远程服务
         String args = request.getParameter("args");
-        String result = service.sayHello(args);
+        String result = service.sayHello();
         System.out.println(result);
         return "result";
     }

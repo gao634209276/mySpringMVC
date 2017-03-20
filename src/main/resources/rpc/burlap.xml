@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/context
+	   http://www.springframework.org/schema/context/spring-context.xsd
+	   http://www.springframework.org/schema/mvc
+	   http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<!-- xml传输数据，数据量比httpinvoker方式小 -->
+	<context:component-scan base-package="spring"/>
+	<bean name="/burlapService" class="org.springframework.remoting.caucho.BurlapServiceExporter">
+		<property name="service" ref="helloServiceImpl"/>
+		<property name="serviceInterface" value="spring.service.HelloService"/>
+	</bean>
+
+	<!--Client Site conf Bean-->
+	<bean id="burlapProxyFactoryBean" class="org.springframework.remoting.caucho.BurlapProxyFactoryBean">
+		<property name="serviceUrl" value="http://localhost:8080/remote/BurlapService"/>
+		<property name="serviceInterface" value="spring.service.HelloService"/>
+	</bean>
+</beans>

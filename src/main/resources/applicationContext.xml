@@ -1,53 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
 	   http://www.springframework.org/schema/beans/spring-beans.xsd
 	   http://www.springframework.org/schema/context
 	   http://www.springframework.org/schema/context/spring-context.xsd
 	   http://www.springframework.org/schema/mvc
-	   http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	   http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	   http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 	<!---scan标签指定了查找组件的包名-->
 	<context:component-scan base-package="spring"/>
 	<!-- 业务类，可以设置为自动装配 -->
 	<mvc:annotation-driven/>
 	<mvc:default-servlet-handler/>
-	<import resource="dubboprovide.xml"/>
-
-
-	<!--Remote Site conf Bean-->
-	<!--<bean id="accountService" class="spring.rmi.AccountServiceImpl"/>-->
-	<!--<bean class="org.springframework.remoting.rmi.RmiServiceExporter">
-		&lt;!&ndash; 不一定要与要输出的bean同名&ndash;&gt;
-		<property name="serviceName" value="RmiService"/>
-		<property name="service" ref="serviceImpl"/>
-		<property name="serviceInterface" value="spring.service.ServiceIf"/>
-		&lt;!&ndash;  默认为1199&ndash;&gt;
-		<property name="registryPort" value="1199"/>
-	</bean>-->
-	<!--  使用HTTP调用器暴露服务,类似rmi方式,采用java序列化,数据量较大 -->
-	<bean name="/httpInvokerService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="helloServiceImpl"/>
-		<property name="serviceInterface" value="spring.service.HelloService"/>
-	</bean>
-	<!-- xml传输数据，数据量比httpinvoker方式小 -->
-	<bean name="/burlapService" class="org.springframework.remoting.caucho.BurlapServiceExporter">
-		<property name="service" ref="helloServiceImpl"/>
-		<property name="serviceInterface" value="spring.service.HelloService"/>
-	</bean>
-	<!--  远程服务，采用hessian序列化，数据量最小 -->
-	<bean name="/hessianService" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="helloServiceImpl"/>
-		<property name="serviceInterface" value="spring.service.HelloService"/>
-	</bean>
-	<!--SimpleJaxWsServiceExporter类的baseAddress属性用于指定webservice的根路径-->
-	<!--完整的web服务地址=根路径+WebService名称-->
-	<!--<bean class="org.springframework.remoting.jaxws.SimpleJaxWsServiceExporter">
-		<property name="baseAddress" value="http://localhost:8080/remote/webService"/>
-	</bean>-->
-
+	<import resource="classpath:rpc/httpInvoker.xml"/>
+	<import resource="classpath:rpc/hessian.xml"/>
+	<import resource="classpath:rpc/rmi.xml"/>
+	<import resource="rpc/burlap.xml"/>
+	<!--<import resource="rpc/webService.xml"/>-->
+	<import resource="classpath:properties/remote.xml"/>
 
 	<!--<wss:binding url="/getNameWS">
 		<wss:service>
@@ -88,5 +62,4 @@
 		<property name="serviceUrl" value="http://localhost:8080/remote/hessianService"/>
 		<property name="serviceInterface" value="spring.service.HelloService"/>
 	</bean>
-
 </beans>
