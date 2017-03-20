@@ -2,6 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
@@ -11,6 +12,7 @@
 	   http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<context:component-scan base-package="spring"/>
+	<mvc:annotation-driven/>
 	<!-- 这种加载方式可以在代码中通过@Value注解进行注入,
 	可以将配置整体赋给Properties类型的类变量，也可以取出其中的一项赋值给String类型的类变量 -->
 	<!-- <util:properties/> 标签只能加载一个文件，当多个属性文件需要被加载的时候，可以使用多个该标签 -->

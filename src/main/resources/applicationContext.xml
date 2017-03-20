@@ -50,16 +50,4 @@
 		<property name="serviceUrl" value="rmi://localhost:1199/remote/rmiService"/>
 		<property name="serviceInterface" value="spring.service.ServiceIf"/>
 	</bean>-->
-	<bean id="httpInvokerProxyFactoryBean" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
-		<property name="serviceUrl" value="http://localhost:8080/remote/httpInvokerService"/>
-		<property name="serviceInterface" value="spring.service.HelloService"/>
-	</bean>
-	<bean id="burlapProxyFactoryBean" class="org.springframework.remoting.caucho.BurlapProxyFactoryBean">
-		<property name="serviceUrl" value="http://localhost:8080/remote/BurlapService"/>
-		<property name="serviceInterface" value="spring.service.HelloService"/>
-	</bean>
-	<bean id="hessianProxyFactoryBean" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
-		<property name="serviceUrl" value="http://localhost:8080/remote/hessianService"/>
-		<property name="serviceInterface" value="spring.service.HelloService"/>
-	</bean>
 </beans>
