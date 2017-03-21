@@ -21,10 +21,13 @@ public class Client {
 	@Value("#{remoteSettings['remote.serviceName']}")
 	public String service;
 
+	// 在remote.xml中通过properties注入
 	private Properties properties;
+
 	public void setProperties(Properties properties) {
 		this.properties = properties;
 	}
+
 	public Properties getProperties() {
 		return properties;
 	}

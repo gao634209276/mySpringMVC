@@ -3,11 +3,13 @@
 		"http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-		 version="3.1">
+         version="3.1">
 	<display-name>Archetype Created Web Application</display-name>
+	<!-- 配置spring的加载文件路径及文件名称,默认在：WEB-INF/applicationContext.xml
+	 可以自定义spring默认加载的xml文件的名称,可以以逗号和空格进行分隔,也可以使用Ant类型的去标记.xml-->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:applicationContext.xml</param-value>
@@ -20,7 +22,10 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
+	<!-- 自己去写一个监听器来实现加载beans.xml,进而启动spring容器 -->
+	<!--<listener>
+		<listener-class>servlet.InitSpringFactoryListener</listener-class>
+	</listener>-->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

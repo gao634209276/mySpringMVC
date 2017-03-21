@@ -51,6 +51,9 @@ public class SpringPropertiesUtil extends PropertyPlaceholderConfigurer {
 		return value;
 	}
 
+	/**
+	 * 通过application中获取bean实例
+	 */
 	public static void main(String[] args) {
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
 		SpringPropertiesUtil properties = (SpringPropertiesUtil) context.getBean("myPropertyConfigurer");

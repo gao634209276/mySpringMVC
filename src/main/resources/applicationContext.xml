@@ -8,9 +8,7 @@
 	   http://www.springframework.org/schema/context
 	   http://www.springframework.org/schema/context/spring-context.xsd
 	   http://www.springframework.org/schema/mvc
-	   http://www.springframework.org/schema/mvc/spring-mvc.xsd
-	   http://www.springframework.org/schema/util
-       http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+	   http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	<!---scan标签指定了查找组件的包名-->
 	<context:component-scan base-package="spring"/>
 	<!-- 业务类，可以设置为自动装配 -->
@@ -21,7 +19,10 @@
 	<import resource="classpath:rpc/rmi.xml"/>
 	<import resource="rpc/burlap.xml"/>
 	<!--<import resource="rpc/webService.xml"/>-->
+	<import resource="classpath:/property/jdbc.xml"/>
+	<import resource="classpath:/property/mq.xml"/>
 	<import resource="classpath:property/remote.xml"/>
+	<import resource="classpath:property/myremote.xml"/>
 
 	<!--<wss:binding url="/getNameWS">
 		<wss:service>
