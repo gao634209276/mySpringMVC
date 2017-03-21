@@ -16,7 +16,7 @@
 		<!-- 不一定要与要输出的bean同名-->
 		<property name="serviceName" value="RmiService"/>
 		<property name="service" ref="helloServiceImpl"/>
-		<property name="serviceInterface" value="spring.service.HelloService"/>
+		<property name="serviceInterface" value="service.HelloService"/>
 		<!--  默认为1199-->
 		<property name="registryPort" value="1199"/>
 	</bean>
@@ -26,6 +26,6 @@
 	<!--为了把rmi服务连接到客户端上，我们将创建一个单独的Spring容器，包含这个简单对象和链接配置位的服务：-->
 	<!--<bean id="rmiProxyFactoryBean" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
 		<property name="serviceUrl" value="rmi://localhost:1199/remote/rmiService"/>
-		<property name="serviceInterface" value="spring.service.ServiceIf"/>
+		<property name="serviceInterface" value="service.ServiceIf"/>
 	</bean>-->
 </beans>

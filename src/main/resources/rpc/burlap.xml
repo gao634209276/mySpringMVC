@@ -13,12 +13,12 @@
 	<context:component-scan base-package="spring"/>
 	<bean name="/burlapService" class="org.springframework.remoting.caucho.BurlapServiceExporter">
 		<property name="service" ref="helloServiceImpl"/>
-		<property name="serviceInterface" value="spring.service.HelloService"/>
+		<property name="serviceInterface" value="service.HelloService"/>
 	</bean>
 
 	<!--Client Site conf Bean-->
 	<bean id="burlapProxyFactoryBean" class="org.springframework.remoting.caucho.BurlapProxyFactoryBean">
 		<property name="serviceUrl" value="http://localhost:8080/remote/BurlapService"/>
-		<property name="serviceInterface" value="spring.service.HelloService"/>
+		<property name="serviceInterface" value="service.HelloService"/>
 	</bean>
 </beans>

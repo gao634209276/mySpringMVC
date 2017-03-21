@@ -1,4 +1,4 @@
-package spring.ioc.interfaces;
+package spring.ioc;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

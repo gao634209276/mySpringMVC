@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean name="student" class="spring.ioc.Student">
+		<constructor-arg type="int" value="25">
+		</constructor-arg>
+		<constructor-arg type="java.lang.String" value="tom">
+		</constructor-arg>
+		<constructor-arg type="long" value="100">
+		</constructor-arg>
+	</bean>
+</beans>

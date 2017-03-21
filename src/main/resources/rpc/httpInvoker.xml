@@ -14,12 +14,12 @@
 	<!--  使用HTTP调用器暴露服务,类似rmi方式,采用java序列化,数据量较大 -->
 	<bean name="/httpInvokerService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="helloServiceImpl"/>
-		<property name="serviceInterface" value="spring.service.HelloService"/>
+		<property name="serviceInterface" value="service.HelloService"/>
 	</bean>
 
 	<!--Client Site conf Bean-->
 	<bean id="httpInvokerProxyFactoryBean" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
 		<property name="serviceUrl" value="http://localhost:8080/remote/httpInvokerService"/>
-		<property name="serviceInterface" value="spring.service.HelloService"/>
+		<property name="serviceInterface" value="service.HelloService"/>
 	</bean>
 </beans>

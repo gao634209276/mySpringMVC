@@ -13,12 +13,12 @@
 	<!--  远程服务，采用hessian序列化，数据量最小 -->
 	<bean name="/hessianService" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="helloServiceImpl"/>
-		<property name="serviceInterface" value="spring.service.HelloService"/>
+		<property name="serviceInterface" value="service.HelloService"/>
 	</bean>
 
 	<!--Client Site conf Bean-->
 	<bean id="hessianProxyFactoryBean" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
 		<property name="serviceUrl" value="http://localhost:8080/remote/hessianService"/>
-		<property name="serviceInterface" value="spring.service.HelloService"/>
+		<property name="serviceInterface" value="service.HelloService"/>
 	</bean>
 </beans>

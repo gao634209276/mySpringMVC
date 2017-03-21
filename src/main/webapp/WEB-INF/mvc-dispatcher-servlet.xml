@@ -10,7 +10,7 @@
 	   http://www.springframework.org/schema/context
 	   http://www.springframework.org/schema/context/spring-context.xsd">
 	<!--指明 controller 所在包，并扫描其中的注解-->
-	<context:component-scan base-package="spring.controller" use-default-filters="false">
+	<context:component-scan base-package="controller" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	<!-- 在web.xml中DispatcherServlet使用<url-pattern>/</url-pattern> 映射,静态资源(js、image等)的访问 -->

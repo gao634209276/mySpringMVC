@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import spring.service.HelloService;
-import spring.webService.MyServiceEndpoint;
+import service.HelloService;
+import webService.MyServiceEndpoint;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.Endpoint;

@@ -1,4 +1,4 @@
-package spring.service;
+package service;
 
 
 import org.apache.commons.logging.Log;

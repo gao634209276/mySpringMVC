@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="oneInterface" class="spring.ioc.interfaces.OneInterfaceImpl"/>
+	<!--1,基本类型的装配-->
+	<bean id="helloBean" class="spring.ioc.HelloBean">
+		<property name="name">
+			<!--value是对以基本类型,都用value(标签/属性)来注入,可以实现自动的数据类型转换-->
+			<value type="java.lang.String">tom</value>
+		</property>
+		<property name="age" value="20">
+		</property>
+	</bean>
+	<!--2,对象类型的装配-->
+	<bean id="someBean" class="spring.ioc.SomeBean">
+		<property name="ob">
+			<ref bean="otherBean"/>
+		</property>
+	</bean>
+
+	<bean id="otherBean" class="spring.ioc.OtherBean">
+		<property name="str1" value="string1"/>
+	</bean>
+	<!--3,集合的装配-->
+	<bean id="listBean" class="spring.ioc.ListBean">
+		<property name="listProperty">
+			<list>
+				<value>list1</value>
+				<value>list1</value>
+				<value>list3</value>
+			</list>
+		</property>
+		<property name="setProperty">
+			<set>
+				<value>set1</value>
+				<value>set1</value>
+				<value>set3</value>
+			</set>
+		</property>
+		<property name="mapProperty">
+			<map>
+				<entry key="key1">
+					<value>value1</value>
+				</entry>
+				<entry key="key2">
+					<value>value2</value>
+				</entry>
+			</map>
+		</property>
+		<property name="property">
+			<props>
+				<prop key="key1">prop1</prop>
+				<prop key="key2">prop2</prop>
+				<prop key="key3">prop3</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

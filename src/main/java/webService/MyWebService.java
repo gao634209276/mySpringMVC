@@ -1,4 +1,4 @@
-package spring.webService;
+package webService;
 
 import org.springframework.stereotype.Service;
 

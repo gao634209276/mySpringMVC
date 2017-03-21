@@ -3,7 +3,7 @@ package spring.client;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import spring.service.HelloService;
+import service.HelloService;
 
 public class DubboClient {
 	ClassPathXmlApplicationContext context;

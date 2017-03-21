@@ -9,7 +9,7 @@
 <!--         </bean> -->
 
 		<bean id="injectionService" class="spring.ioc.injection.service.InjectionServiceImpl">
-        	<constructor-arg name="injectionDAO" ref="injectionDAO"></constructor-arg>
+        	<constructor-arg name="injectionDAO1" ref="injectionDAO"></constructor-arg>
         </bean>
         
         <bean id="injectionDAO" class="spring.ioc.injection.dao.InjectionDAOImpl"></bean>

@@ -1,4 +1,4 @@
-package spring.webService;
+package webService;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import javax.jws.WebService;
  */
 @Service
 @Component
-@WebService(serviceName = "MyWebServiceImpl", endpointInterface = "spring.webService.MyServiceEndpoint")
+@WebService(serviceName = "MyWebServiceImpl", endpointInterface = "webService.MyServiceEndpoint")
 public class MyWebServiceImpl implements MyWebService {
 	@Override
 	public String sayHello(String name) {

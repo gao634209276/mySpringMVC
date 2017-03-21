@@ -9,9 +9,7 @@ import org.springframework.util.StringUtils;
 public class UnitTestBase {
 
 	private ClassPathXmlApplicationContext context;
-
 	private String springXmlpath;
-
 	public UnitTestBase() {
 	}
 
@@ -38,7 +36,7 @@ public class UnitTestBase {
 	}
 
 	@SuppressWarnings("unchecked")
-	protected <T extends Object> T getBean(String beanId) {
+	protected <T> T getBean(String beanId) {
 		try {
 			return (T) context.getBean(beanId);
 		} catch (BeansException e) {
@@ -47,7 +45,7 @@ public class UnitTestBase {
 		}
 	}
 
-	protected <T extends Object> T getBean(Class<T> clazz) {
+	protected <T> T getBean(Class<T> clazz) {
 		try {
 			return context.getBean(clazz);
 		} catch (BeansException e) {
