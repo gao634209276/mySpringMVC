@@ -26,7 +26,7 @@ Hessian使用一个特定的Servlet通过HTTP进行通讯。使用Spring在Web M
 在新创建的 remoting-servlet.xml 应用上下文里，我们将创建一个HessianServiceExporter来暴露你的服务：
 
 <bean id="accountService" class="example.AccountServiceImpl">
-    <!-- any additional spring.properties, maybe a DAO? -->
+    <!-- any additional spring.spring.properties, maybe a DAO? -->
 </bean>
 
 <bean name="/AccountService" class="org.springframework.remoting.caucho.HessianServiceExporter">

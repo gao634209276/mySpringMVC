@@ -1,7 +1,6 @@
 package spring.properties;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.Properties;
@@ -30,11 +29,5 @@ public class Client {
 		return properties;
 	}
 
-	public static void main(String[] args) {
-		//System.out.println(ip);
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-		Client client = (Client) context.getBean("client");
-		System.out.println(client.ip);
 
-	}
 }

@@ -7,8 +7,8 @@
 		<constructor-arg>
 			<list>
 				<!-- 这里支持多种寻址方式：classpath和file -->
-				<value>classpath:/spring.properties/mq.spring.properties</value>
-				<value>classpath:/spring.properties/jdbc.spring.properties</value>
+				<value>classpath:/spring.spring.properties/mq.spring.spring.properties</value>
+				<value>classpath:/spring.spring.properties/jdbc.spring.spring.properties</value>
 			</list>
 		</constructor-arg>
 	</bean>

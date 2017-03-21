@@ -9,7 +9,7 @@
 	<bean id="dbResources" class="java.util.ArrayList">
 		<constructor-arg>
 			<list>
-				<value>classpath:/spring.properties/jdbc.spring.properties</value>
+				<value>classpath:/properties/jdbc.properties</value>
 			</list>
 		</constructor-arg>
 	</bean>
@@ -18,7 +18,7 @@
 	<bean id="mqResources" class="java.util.ArrayList">
 		<constructor-arg>
 			<list>
-				<value>classpath:/spring.properties/mq.spring.properties</value>
+				<value>classpath:/properties/mq.properties</value>
 			</list>
 		</constructor-arg>
 	</bean>

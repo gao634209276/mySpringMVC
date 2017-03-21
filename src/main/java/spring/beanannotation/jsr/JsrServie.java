@@ -11,22 +11,22 @@ import org.springframework.stereotype.Service;
 //@Service
 @Named
 public class JsrServie {
-	
-//	@Resource
-//	@Inject
+
+	//@Resource
+	//@Inject
 	private JsrDAO jsrDAO;
-	
-//	@Resource
+
+	//@Resource
 	@Inject
 	public void setJsrDAO(@Named("jsrDAO") JsrDAO jsrDAO) {
 		this.jsrDAO = jsrDAO;
 	}
-	
+
 	@PostConstruct
 	public void init() {
 		System.out.println("JsrServie init.");
 	}
-	
+
 	@PreDestroy
 	public void destroy() {
 		System.out.println("JsrServie destroy.");
@@ -35,5 +35,5 @@ public class JsrServie {
 	public void save() {
 		jsrDAO.save();
 	}
-	
+
 }
