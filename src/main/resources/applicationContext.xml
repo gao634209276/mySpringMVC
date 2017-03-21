@@ -21,7 +21,7 @@
 	<import resource="classpath:rpc/rmi.xml"/>
 	<import resource="rpc/burlap.xml"/>
 	<!--<import resource="rpc/webService.xml"/>-->
-	<import resource="classpath:properties/remote.xml"/>
+	<import resource="classpath:spring.properties/remote.xml"/>
 
 	<!--<wss:binding url="/getNameWS">
 		<wss:service>

@@ -1,4 +1,4 @@
-package client;
+package spring.client;
 
 import com.caucho.hessian.client.HessianProxyFactory;
 import spring.service.HelloService;

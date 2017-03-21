@@ -1,4 +1,4 @@
-package client;
+package spring.client;
 
 import org.junit.Before;
 import org.junit.Test;

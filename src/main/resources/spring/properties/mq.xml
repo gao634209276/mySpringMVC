@@ -16,9 +16,9 @@
 		<property name="locations">
 			<list>
 				<!-- 这里支持多种寻址方式：classpath和file -->
-				<value>classpath:/properties/mq.properties</value>
+				<value>classpath:/spring.properties/mq.spring.properties</value>
 				<!-- 推荐使用file的方式引入，这样可以将配置和代码分离 -->
-				<!--<value>file:D:/xx/demo-mq.properties</value>-->
+				<!--<value>file:D:/xx/demo-mq.spring.properties</value>-->
 			</list>
 		</property>
 	</bean>

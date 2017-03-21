@@ -1,4 +1,4 @@
-package properties;
+package spring.properties;
 
 public class TestProperties {
 
