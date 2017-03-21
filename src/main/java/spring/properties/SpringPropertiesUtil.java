@@ -39,6 +39,9 @@ public class SpringPropertiesUtil extends PropertyPlaceholderConfigurer {
 	}
 
 
+	/**
+	 * 自定义添加一个实现方法
+	 */
 	public String getOrElse(String name, String defaultValue) {
 
 		for (String key : propertiesMap.keySet()) {

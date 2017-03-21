@@ -19,10 +19,16 @@
 	<import resource="classpath:rpc/rmi.xml"/>
 	<import resource="rpc/burlap.xml"/>
 	<!--<import resource="rpc/webService.xml"/>-->
+	<!--spring加载jdbc.properties-->
 	<import resource="classpath:/property/jdbc.xml"/>
+	<!--spring加载properties方式2-->
 	<import resource="classpath:/property/mq.xml"/>
+	<!--spring加载properties以及管理demo-->
 	<import resource="classpath:property/remote.xml"/>
+	<!--自定义properties加载类，注入bean-->
 	<import resource="classpath:property/myremote.xml"/>
+
+
 
 	<!--<wss:binding url="/getNameWS">
 		<wss:service>
@@ -43,7 +49,6 @@
 			<bean class="com.plateno.interceptor.CommonInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>-->
-
 
 	<!--Client Site conf Bean-->
 	<!--为了把rmi服务连接到客户端上，我们将创建一个单独的Spring容器，包含这个简单对象和链接配置位的服务：-->
