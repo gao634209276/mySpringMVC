@@ -84,3 +84,5 @@ IOC注入的方式有好几种，现在就来学习一下set方式注入~
 <constructor-arg  index="0" value="">
 那就先开始说第一种形式：根据参数类型的构造器注入
 1.先写Bean类-Student类：
+
+http://blog.csdn.net/qq_33642117/article/category/6302171

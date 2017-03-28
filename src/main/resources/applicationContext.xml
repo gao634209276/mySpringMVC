@@ -10,7 +10,7 @@
 	   http://www.springframework.org/schema/mvc
 	   http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	<!---scan标签指定了查找组件的包名-->
-	<context:component-scan base-package="spring"/>
+	<context:component-scan base-package="controller,servlet,service,spring"/>
 	<!-- 业务类，可以设置为自动装配 -->
 	<mvc:annotation-driven/>
 	<mvc:default-servlet-handler/>
