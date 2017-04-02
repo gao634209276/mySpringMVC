@@ -9,7 +9,7 @@ import org.springframework.util.StringUtils;
 /**
  * 完成对spring配置文件的加载，销毁。
  * 所有的单元测试类都集成子UnitTestBase，通过他的getBean方法获取想要的对象
- * 子类加注解：@RunWith(Block
+ * 子类加注解：@RunWith(BlockJUnit4ClassRunner.class)
  *
  */
 public class UnitTestBase {

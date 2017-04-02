@@ -1,4 +1,4 @@
-package spring.autowiring;
+package spring.bean.autowiring;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +10,7 @@ import spring.base.UnitTestBase;
 public class TestAutoWiring extends UnitTestBase {
 
 	public TestAutoWiring() {
-		super("classpath:spring-autowiring.xml");
+		super("classpath:spring-autoWiring.xml");
 	}
 
 	@Test

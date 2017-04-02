@@ -25,6 +25,14 @@
           <file>file://$MODULE_DIR$/src/main/resources/spring-injection.xml</file>
           <file>file://$MODULE_DIR$/src/main/resources/ioc/ioc-constructor.xml</file>
           <file>file://$MODULE_DIR$/src/main/resources/ioc/ioc-set.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/ioc/injection/spring-beanannotation.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/ioc/injection/spring-injection.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/bean/spring-beanscope.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/bean/spring-lifecycle.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/bean/spring-autowiring.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/bean/spring-aware.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring-beanannotation.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring-resource.xml</file>
         </fileset>
         <fileset id="web mvc-dispatcher servlet context" name="MVC mvc-dispatcher servlet context" removed="true">
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml</file>

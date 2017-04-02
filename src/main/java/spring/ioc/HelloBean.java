@@ -4,7 +4,7 @@ package spring.ioc;
  * 通过依赖注入bean，在test测试中测试
  *  see: ioc/ioc-set.xml
  *  see: TestIOC
- *  see: ioc/readme.txt
+ *  see: ioc/1ioc.txt
  */
 public class HelloBean {
 

@@ -12,7 +12,7 @@ import spring.base.UnitTestBase;
 public class TestInjection extends UnitTestBase {
 
 	public TestInjection() {
-		super("classpath:spring-beanannotation.xml");
+		super("classpath:spring/ioc/spring-beanannotation.xml");
 	}
 
 	@Test

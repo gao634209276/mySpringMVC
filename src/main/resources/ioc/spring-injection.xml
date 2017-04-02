@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd" >
-        
-<!--         <bean id="injectionService" class="spring.ioc.injection.service.InjectionServiceImpl"> -->
-<!--         	<property name="injectionDAO" ref="injectionDAO"></property> -->
-<!--         </bean> -->
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-		<bean id="injectionService" class="spring.ioc.injection.service.InjectionServiceImpl">
-        	<constructor-arg name="injectionDAO1" ref="injectionDAO"></constructor-arg>
-        </bean>
-        
-        <bean id="injectionDAO" class="spring.ioc.injection.dao.InjectionDAOImpl"></bean>
-	
- </beans>
+	<!--被注入的bean-->
+	<bean id="injectionDAO" class="spring.ioc.injection.dao.InjectionDAOImpl"/>
+
+	<!--bean中设值注入(property)和构造注入(constructor-arg)-->
+	<bean id="injectionService" class="spring.ioc.injection.service.InjectionServiceImpl">
+		<!--设值注入,Bean要先实例化,如果有含参构造器而没构造注入,需要先明确声明一个无参构造器-->
+		<!--property属性名称要与setInjectionDAO方法名称对应相同,ref引用该id或name的bean-->
+		<property name="injectionDAO" ref="injectionDAO"/>
+		<!--<property name="injectionDAO" value="xxx"/>-->
+
+		<!--构造注入,需要一个与被注入bean类型的含参构造器-->
+		<!--arg名称要与对应构造器的参数名称相同-->
+		<constructor-arg name="injectionDAO" ref="injectionDAO"/>
+	</bean>
+</beans>

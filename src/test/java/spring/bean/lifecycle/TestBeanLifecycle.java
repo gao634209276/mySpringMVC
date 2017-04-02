@@ -1,4 +1,4 @@
-package spring.lifecycle;
+package spring.bean.lifecycle;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

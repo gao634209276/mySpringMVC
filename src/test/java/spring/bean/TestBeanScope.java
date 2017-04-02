@@ -10,21 +10,29 @@ import spring.base.UnitTestBase;
 public class TestBeanScope extends UnitTestBase {
 
 	public TestBeanScope() {
-		super("classpath*:spring-beanscope.xml");
+		super("classpath*:bean/spring-beanScope.xml");
 	}
 
+	/**
+	 * 在resources/bean/spring-beanScope.xml中修改
+	 * scope="singleton"
+	 * scope="prototype"
+	 */
 	@Test
 	public void testSay() {
-		BeanScope beanScope = super.getBean("beanScope");
-		beanScope.say();
+		// 由于加载spring-beanScope一次,即初始化实例化了一次
+		// 这里分别调用两次,观察bean实例的hash值
+		say("beanScopeSingleton");
+		// singleton的hash相同
+		say("beanScopeSingleton");
 
-		BeanScope beanScope2 = super.getBean("beanScope");
-		beanScope2.say();
+		// 而prototype的每次都是一个新的hash
+		say("beanScopePrototype");
+		say("beanScopePrototype");
 	}
 
-	@Test
-	public void testSay2() {
-		BeanScope beanScope = super.getBean("beanScope");
+	public void say(String scopeBean) {
+		BeanScope beanScope = super.getBean(scopeBean);
 		beanScope.say();
 	}
 

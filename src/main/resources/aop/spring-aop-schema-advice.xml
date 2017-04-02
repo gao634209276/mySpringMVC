@@ -7,9 +7,9 @@
         http://www.springframework.org/schema/aop 
         http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 
-	<bean id="moocAspect" class="spring.aop.schema.advice.MoocAspect"></bean>
+	<bean id="moocAspect" class="spring.aop.schema.advice.MoocAspect"/>
 	
-	<bean id="aspectBiz" class="spring.aop.schema.advice.biz.AspectBiz"></bean>
+	<bean id="aspectBiz" class="spring.aop.schema.advice.biz.AspectBiz"/>
 	
 	<aop:config>
 		<aop:aspect id="moocAspectAOP" ref="moocAspect">

@@ -1,0 +1,71 @@
+专题一：
+	接口及面向接口编程
+	什么是ioc
+	spring的Bean配置
+	Bean的初始化
+	Spring的常用注入方式
+
+-----------------------------------------------
+1,面向接口编程：
+结构设计中，分清层次以及调用关系，每层只向外（上层）提供一组功能接口，各层间仅依赖接口而非实现类
+接口实现的变动不影响各层间的调用，这一点在公共服务中尤为重要
+“面向接口编程”中的“接口”是用于隐藏具体实现和实现多态性的组件
+例子：See: spring.ioc.interfaces.OneInterfaceImpl.main
+
+2,什么是ioc
+-----------------------------------------------
+IOC:控制反转，控制权的转移，应用程序本身不负责依赖对象的创建和维护，而是由外部容器负责创建和维护
+DI：（依赖注入）是一种实现方式
+目的：创建对象并且组装对象之间的关系
+	Your Business Object(POJOs)-->
+	[(configuration Metadata)-->[The Spring Container]]
+	--(produces)-->Fully configured system Ready for Use
+理解：获得以来对象的过程被控制反转了，控制反转之后，获得依赖对象的过程由自身管理变为了有IOC容器主动注入。
+于是“控制反转”更合适的名字叫“依赖注入 Dependency Injection”。实际上是实现IOC的方法：注入。
+所谓的依赖注入，就是由ioc容器在运行期间，动态将某种以来关系注入到对象中。
+运行过程：
+	读取xml获取Context-->找ioc容器-->容器返回对象-->使用对象
+
+Bean配置：
+-----------------------------------------------
+See: resources/ioc/ioc-set.xml
+	<bean id="oneInterface" class="spring.ioc.interfaces.OneInterfaceImpl"/>
+测试类：
+	See: test/java/spring/ioc/TestOneInterface.testSay()
+
+
+Bean容器初始化
+-----------------------------------------------
+基础:两个包
+	org.springframework.beans
+	org.springframework.context
+	BeanFactory提供配置结构和基本功能,加载并初始化Bean
+	ApplicationContext保存了Bean对象并在Spring中被广泛使用
+方式:ApplicationContext
+	本地文件
+	Classpath
+	Web应用中依赖servlet或Listener
+
+Spring注入
+-----------------------------------------------
+Spring注入是指在启动Spring容器加载bean配置的时候,完成对变量的赋值行为
+常用的两种注入方式
+	设置注入--被注入的类中定义有一个setter（）方法，并在参数中定义需要注入的对象
+	构造注入--被注入的类中声明一个构造方法，并在此方法的参数中定义要注入的对象
+	See:resources/ioc/injection/spring-injection.xml
+	src/main/spring/ioc/injection/InjectionServiceImpl.java
+	src/test/
+
+简单综述:
+Service层一般结合业务逻辑处理业务,在处理数据时候可以调用Dao层,
+Dao层一般提供处理数据库等数据源的通用CRUD操作的方法
+	这里模拟一个功能非常简单的Service和Dao接口以及对应的实现,
+	并且将Dao实现类Bean注入到Service实现类中.
+	其中构造注入Bean要先实例化,如果有含参构造器而没构造注入,需要先明确声明一个无参构造器
+	<property/>属性名称要与setInjectionDAO方法名称对应相同
+	<constructor-arg/>构造注入,需要一个与被注入bean类型的含参构造器
+	值可以用value直接赋值,也可以用ref引用相同id或name的bean
+
+关于ioc体系的spring详细源码解读:
+See:
+	http://blog.csdn.net/he90227/article/details/51536348

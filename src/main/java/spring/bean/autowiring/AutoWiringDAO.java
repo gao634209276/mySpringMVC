@@ -1,4 +1,4 @@
-package spring.autowiring;
+package spring.bean.autowiring;
 
 public class AutoWiringDAO {
 	

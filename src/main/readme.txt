@@ -244,7 +244,11 @@ Spring支持以下4种类型的过滤方式：
 	}
 
 4.总结
-SpringMVC是一个基于DispatcherServlet的MVC框架，每一个请求最先访问的都是DispatcherServlet，DispatcherServlet负责转发每一个Request请求给相应的Handler，Handler处理以后再返回相应的视图(View)和模型(Model)，返回的视图和模型都可以不指定，即可以只返回Model或只返回View或都不返回。在使用注解的SpringMVC中，处理器Handler是基于@Controller和@RequestMapping这两个注解的，@Controller声明一个处理器类，@RequestMapping声明对应请求的映射关系，这样就可以提供一个非常灵活的匹配和处理方式。
+SpringMVC是一个基于DispatcherServlet的MVC框架，每一个请求最先访问的都是DispatcherServlet，
+DispatcherServlet负责转发每一个Request请求给相应的Handler，
+Handler处理以后再返回相应的视图(View)和模型(Model)，返回的视图和模型都可以不指定，即可以只返回Model或只返回View或都不返回。
+在使用注解的SpringMVC中，处理器Handler是基于@Controller和@RequestMapping这两个注解的，
+@Controller声明一个处理器类，@RequestMapping声明对应请求的映射关系，这样就可以提供一个非常灵活的匹配和处理方式。
 
 
 

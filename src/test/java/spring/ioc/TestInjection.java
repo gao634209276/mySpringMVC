@@ -11,7 +11,7 @@ import spring.base.UnitTestBase;
 public class TestInjection extends UnitTestBase {
 
 	public TestInjection() {
-		super("classpath:spring-injection.xml");
+		super("classpath:spring-ioc.injection.xml");
 	}
 
 	@Test

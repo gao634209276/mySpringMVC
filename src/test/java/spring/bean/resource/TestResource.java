@@ -1,4 +1,4 @@
-package spring.resource;
+package spring.bean.resource;
 
 import java.io.IOException;
 

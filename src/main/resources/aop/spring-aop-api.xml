@@ -10,13 +10,13 @@
         http://www.springframework.org/schema/aop 
         http://www.springframework.org/schema/aop/spring-aop.xsd">
         
-     <bean id="moocBeforeAdvice" class="spring.aop.api.MoocBeforeAdvice"></bean>
+     <bean id="moocBeforeAdvice" class="spring.aop.api.MoocBeforeAdvice"/>
      
-     <bean id="moocAfterReturningAdvice" class="spring.aop.api.MoocAfterReturningAdvice"></bean>
+     <bean id="moocAfterReturningAdvice" class="spring.aop.api.MoocAfterReturningAdvice"/>
      
-     <bean id="moocMethodInterceptor" class="spring.aop.api.MoocMethodInterceptor"></bean>
+     <bean id="moocMethodInterceptor" class="spring.aop.api.MoocMethodInterceptor"/>
      
-     <bean id="moocThrowsAdvice" class="spring.aop.api.MoocThrowsAdvice"></bean>
+     <bean id="moocThrowsAdvice" class="spring.aop.api.MoocThrowsAdvice"/>
      
      
      
