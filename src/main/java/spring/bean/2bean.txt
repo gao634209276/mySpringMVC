@@ -9,14 +9,18 @@ Resources&ResourceLoader
 
 Bean配置项
 -----------------------------------------------------
-Id
-Class
-Scope
-Constructor arguments
-Properties
-Autowiring mode
-lazy-initialization mode
-Initialization/destruction method
+	Id
+	Class
+	Scope
+	Constructor arguments
+	Properties
+	Autowiring mode
+	lazy-initialization mode
+	Initialization/destruction method
+相关参考:
+	http://www.tuicool.com/articles/MjeMrqE
+	http://blog.csdn.net/mrwuyi/article/details/51564248
+	http://blog.csdn.net/u013468915/article/details/52235115
 
 Bean作用域
 -----------------------------------------------------
@@ -29,6 +33,12 @@ Bean作用域
 	See:spring/bean/BeanScope.java
 	resources/bean/spring-beanScope.xml
 	test/java/bean/TestBeanScope.java
+相关参考:
+	http://blog.csdn.net/fhx007/article/details/7016694
+	http://blog.csdn.net/sunzheng12345/article/details/8445316
+	http://www.cnblogs.com/maybo/p/5189474.html
+	http://blog.itpub.net/25261409/viewspace-1055868/
+
 
 Bean的生命周期
 -----------------------------------------------------
@@ -48,6 +58,14 @@ Bean的生命周期
 如果bean实现了InitializingBean接口/DisposableBean接口或者在<bean>中配置init-method/destroy-method,
 那么在<beans>中配置的default方法将会被覆盖.
 其执行顺序是接口实现的方法先生效,然后<bean>标签的方法执行
+详情参考:
+	http://www.cnblogs.com/zrtqsk/p/3735273.html
+	http://blog.csdn.net/qq_33642117/article/details/51924653
+	http://blog.csdn.net/feihong247/article/details/7798474
+	http://997004049-qq-com.iteye.com/blog/1729793
+	http://www.cnblogs.com/caoyc/p/5624417.html
+	http://m.blog.csdn.net/article/details?id=52132996
+
 
 Bean的自动装载(Autowiring)
 -----------------------------------------------------
@@ -65,6 +83,9 @@ Constructor:与byType方式类似,不同之处在于它应用于构造器参数.
 	test/spring/bean/autowiring/TestAutoWiring.java
 使用byType方式,<bean>不用配置id仅通过class匹配
 使用constructor装配,<bean>可以不配id和name
+相关参考:
+	http://www.cnblogs.com/zhongkl/archive/2011/06/03/2071257.html
+	http://blog.csdn.net/travel_1/article/details/50956896
 
 
 Aware
@@ -99,6 +120,13 @@ NameAware例子:
 	See:spring/bean/aware/MyBeanNameAware.java
 	resources/bean/spring-aware.xml
 	test/java/spring/bean/aware/TestAware.java
+相关参考:
+	http://blog.csdn.net/java2000_wl/article/details/7378025
+	http://blog.csdn.net/ilovejava_2010/article/details/7953582
+	http://www.sxt.cn/info-6234-u-8934.html
+	http://blog.csdn.net/javaloveiphone/article/details/52143126
+
+
 
 Resources&ResourceLoader
 -----------------------------------------------------
@@ -110,4 +138,30 @@ Resources 针对于资源文件的统一接口
 	InputStreamResource:针对于输入流封装的资源
 	ByteArrayResource:针对于字节数组封装的资源
 
-ResourceLoader
+详细参考:
+	http://www.importnew.com/17655.html
+	http://sishuok.com/forum/blogPost/list/0/2457.html#7105
+	http://www.cnblogs.com/doit8791/p/5774743.html
+	http://blog.csdn.net/supportuat/article/details/50931311
+
+ResourceLoader接口
+ResourceLoader接口用于返回Resource对象；其实现可以看作是一个生产Resource的工厂类。
+	getResource接口用于根据提供的location参数返回相应的Resource对象；而getClassLoader则返回加载这些Resource的ClassLoader。
+	Spring提供了一个适用于所有环境的DefaultResourceLoader实现，可以返回ClassPathResource、UrlResource；
+	还提供一个用于web环境的ServletContextResourceLoader，它继承了DefaultResourceLoader的所有功能，
+	又额外提供了获取ServletContextResource的支持。
+
+	ResourceLoader在进行加载资源时需要使用前缀来指定需要加载：
+	“classpath:path”表示返回ClasspathResource，
+	“http://path”和“file:path”表示返回UrlResource资源，如果不加前缀则需要根据当前上下文来决定，
+	DefaultResourceLoader默认实现可以加载classpath资源，
+
+	对于目前所有ApplicationContext都实现了ResourceLoader，因此可以使用其来加载资源。
+
+	ClassPathXmlApplicationContext：不指定前缀将返回默认的ClassPathResource资源，否则将根据前缀来加载资源；
+	FileSystemXmlApplicationContext：不指定前缀将返回FileSystemResource，否则将根据前缀来加载资源；
+	WebApplicationContext：不指定前缀将返回ServletContextResource，否则将根据前缀来加载资源；
+	其他：不指定前缀根据当前上下文返回Resource实现，否则将根据前缀来加载资源。
+
+ResourceLoaderAware接口
+ResourceLoaderAware是一个标记接口，用于通过ApplicationContext上下文注入ResourceLoader。
