@@ -2,6 +2,9 @@ package spring.aop.schema.advice;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 
+/**
+ * 切面类
+ */
 public class MoocAspect {
 	
 	public void before() {
