@@ -1,0 +1,46 @@
+基于java的容器注解
+@Configuration 和@Bean
+@Bean表示一个用于配置和初始化一个由SpringIoc容器管理的新对象的方法,类似于XML配置文件的<bean/>
+可以在Spring的@Component注解的类中使用@Bean注解任何方法(仅仅是可以)
+上一点中,通常使用的是@Configuration
+	在@Bean中可以自定义Bean name,init-method和destroy-method
+	例子:
+	spring.annotation.javabased.StoreConfig#stringStore()
+	测试类:
+	spring.annotation.javabased.TestJavabased.java
+
+@ImportResource和@Value资源文件读取
+	例子See:
+	spring.annotation.javabased.AppConfig.java
+	resources/properties-config.xml
+	resources/jdbc.properties
+	test/java/spring/annotation/javabased/TestJavabased.java
+
+@Bean和@Scope
+默认@Bean是单例的,Bean的作用域包括singleton,prototype,request,session,global session
+例子See:
+	spring.annotation.javabased.BeanScopeConfig.java
+	test/spring.annotation.javabased.TestJavabased.java
+
+泛型自动装配
+例子See:
+	spring.annotation.javabased.BeanStore.java #接口定义为泛型,两种不同类型泛型实现
+	spring.annotation.javabased.BeanConfig.java #s1,s2的装配,以及最后注释部分(报错)
+
+Autowire扩展内容:自定义qualifier注解
+CustomAutowireConfigurer
+1,CustomAutowireConfigurer是BeanFactoryPostProcessor的子类,通过它可以注册自己的qualifier注解类型
+(即使没有使用Spring的@Qualifier注解)
+	<bean id="customAutowireConfigurer"
+		class="org.springframework.beans.factory.annotation.CustomAutowireConfigurer">
+		<property name = "customQualifierTypes">
+			<set>
+				<value>example.CustomQualifier</value>
+			</set>
+		</property>
+	</bean>
+2,该AutowireCandidateResolver决定自动装配的候选者:
+	--每个bean定义的autowire-candidate值
+	--任何<bean/>中的default-autowire-candidates
+	--@Qualifier注解及使用CustomAutowireConfigurer的定义类型
+

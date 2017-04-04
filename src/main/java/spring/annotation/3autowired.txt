@@ -1,0 +1,138 @@
+@Required
+@Required注解适用于bean属性的setter方法
+@Required注解用于检查特定的属性是否设置
+	这个注解仅仅表示,受影响的bean属性必须在配置时被填充,通过在bean定义或通过自动装配一个明确的属性值.
+	也就是说受影响的 ioc.bean 属性在配置时必须放在 XML 配置文件中，
+	否则容器就会抛出一个 BeanInitializationException 异常。
+深入理解:
+	1.RequiredAnnotationBeanPostProcessor 为该注解的处理器，即bean后置处理器，检查所有带有该解的bean属性是否设置，如果未设置则抛出异常。
+	2.在spring配置文件中可以通过<context:annotation-config/>元素自动注册RequiredAnnotationBeanPostProcessor处理器。
+	3.RequiredAnnotationBeanPostProcessor处理器还能自定义注解用于检查属性，功能与@Required一致
+	如:
+		1.定义一个注解类型
+			@Retention（RetentionPolicy.RUNTIME）
+			@Target（ElementType.METHOD）
+			public @interface CustomRequired {
+			}
+		2.配置 RequiredAnnotationBeanPostProcessor,注入自定义注解类型
+			<bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor">
+				<annotation.property name="requiredAnnotationType">
+					<value>CustomRequired</value>
+				</annotation.property>
+			</bean>
+		然后就可以使用@CustomRequired 检查属性是否设置，功能与@Required一致
+场景:
+	Spring的依赖检查功能仅能检查某些类型的所有属性，不能仅检查特定的属性，灵活性不够。
+	而往往我们只需要检查特定的属性是否设置，而不是特定类型的所有属性。
+	那么我们可以在这些特定的属性setter方法使用@Required注解,
+	为了启用这个bean后处理器进行属性检查，必须在Spring IoC容器中注册它。
+	注意，这个bean后处理器只能检查属性是否已经设置，而不能检查属性是否非空。
+例子:
+	See: spring.annotation.required.Student.java
+	resources/annotation/spring-required.xml
+	test/spring.annotation.TestRequired.java
+	这里在ioc容器配置时候,eclipse等ide工具如果不配置比如age,不会报错,启动运行时候,会报错.
+	而通过idea配置会有直接提示错误,必须配置age属性
+	自定义检查Required实现:
+
+
+@Autowired
+使用@Autowired自动装配Bean,它可以自动帮你把bean里面引用的对象的setter/getter方法省略，它会自动帮你set/get.
+	如在ioc容器的xml中配置如下:
+		<bean id="userDao"class="…"/>
+		<bean id="userService"class="…">
+			<annotation.property name="userDao">
+				<ref bean="userDao"/>
+			</annotation.property>
+		</bean>
+	这样你在userService里面要做一个userDao的setter/getter方法。
+	但如果你用了@Autowired的话，你只需要在UserService的实现类中声明即可。
+	当 Spring 容器启动时，AutowiredAnnotationBeanPostProcessor将扫描 Spring 容器中所有 Bean,
+	当发现 Bean 中拥有 @Autowired 注释时就找到和其匹配（默认按类型匹配）的 Bean,(下面主要说的是设值注入的过程)
+	Spring 将直接采用 Java 反射机制对 Bean 中的属性注入到对应的地方中去,所以大可以将对应的get/set方法删除。
+	1,@Autowired注解自动装配 具有兼容类型 的单个Bean属性
+		a,可以放在构造器或普通字段（即使是非public）或一切具有参数的方法都可以应用@Authwired注解
+			如:用于构造器或成员变量,setter方法
+		b,默认情况下，所有使用@Autowired注解的属性都需要被设置，当Spring找不到匹配的Bean装配属性时，会抛出异常，
+			若某一属性允许不被设置，可以设置@Autowired注解的required属性为false
+			每个类只能有一个构造器被标记为required=true
+			关于@Autowired的required属性,可使用@Required注解
+		c,默认情况下，当IOC容器里存在多个类型兼容的Bean时
+			（@Autowired先是按照类型匹配Bean，如果存在多个类型相同的Bean，此时IOC容器会去寻找与属性名相同名字的Bean），
+			通过类型的自动装配将无法工作，此时可以在@Qualifier注解里Bean属性的名称。
+			Spring允许对方法的方法的输入参数标注 @Qualifier以指定注入Bean的名称
+			@Qualifier在下面进行详细介绍
+	2,@Autowired注解也可以应用在数组类型的属性上，此时Spring将会把所有匹配的Bean进行自动装配
+		如果希望数组有序,可以让bean实现org.springframework.core.Ordered接口或使用@Order注解
+	3,@Autowired注解也可以应用在集合属性上，此时Spring读取该集合的类型信息，然后自动装配所有与之兼容的Bean
+	4,@Autowired注解用在java.util.Map上时，若该Map的键值为String，那么Spring将会自动装配与之Map值类型兼容的Bean，此时Bean的名称作为键值
+
+	使用建议和注意事项:
+		1,可以使用@Autowired注解哪些总所周知的解析依赖性接口,
+			比如:BeanFactory,ApplicationContext,Environment,ResourceLoader,
+			ApplicationEventPublisher,MessageSource等
+		2,可以通过添加注解给需要该类型的数组的字段或方法,以提供ApplicationContext中锁特定类型的bean
+		3,@Autowired是有Spring BeanPostProcessor处理的,所以不能再自己的BeanPostProcessor
+		或BeanFactoryPostProcessor类型应用这些注解,这些烈性必须通过xml或者Spring的@Bean注解加载
+	简单例子:
+		1,分别创建Service和Dao层的接口和实现类
+		See:spring.annotation.injection包
+		2,Dao层实现类通过@Repository注解为Spring Bean,Service层实现类通过@Service注解为Spring Bean;
+		3,我们在Service实现类InjectionServiceImpl.java进行依赖注入InjectionDao实例对象.
+		See:spring.annotation.injection.InjectionServiceImpl.java
+		这里通过两种方式:
+			1,set设值注入
+			2,constructor构造注入
+		我们分别将@Autowired用于构造器,成员变量以及对应的setter方法
+		4,在测试类中进行测试:
+		See:test/java/spring.annotation.TestAutowired.java
+
+	数组以及Map的自动注入例子:
+		1,我们创建一个简单的接口Bean,以及两个不同实现类,并创建一个调用该Bean的接口,自动装载Bean的不同实现.
+		由于Bean接口有两种实现,这里通过多种形式进行装载,
+			首先我们通过List进行自动装载每一种实现bean实例对象
+			See:spring.annotation.autowired.order.BeanInvoke.java
+			这里可以通过@Order注解对所有实例对象进行排序,
+			See:spring.annotation.autowired.order.BeanInterface.java
+		2,我们也可以通过Map进行自动装载每一种实现bean实例对象
+			而这里map的key将会是Bean的name,默认为首字母小写的Bean类名
+			@Order注解不会在Map中对所有实例对象进行排序
+		3,测试类:
+		See:test/java/spring.annotation.TestAutowired.java
+
+@Qualifier
+	1,按类型自动装配可能多个bean实例的情况,可以使用Spring的@Qualifier注解缩小范围(或指定唯一),
+		也可以用于指定单独的构造器参数或方法参数
+	2,可用于注解集合类型变量
+	3,如果通过名字进行注解注入,主要使用的不是@Autowired
+	(即使在技术上能够通过@Qualifier指定bean的名字),替代方式是使用JSR-250 @Resource注解,
+	它是通过定义独特的名称来识别特定的目标(这是一个与所有声明的类型是无关的匹配过程)
+	4,因语义差异,集合或Map类型的bean无法通过@Autowired来注入,因为没有类型匹配到这样的bean,
+	为这些bean使用@Resource注解,通过唯一名称引用集合或Map的bean
+	5,@Autowired适用于fields,constructors,multi-argument methods
+	这些允许在参数级别是有@Qualifier注解缩小范围的情况
+	6,@Resource适用于成员变量,只有一个参数的setter方法,所以在目前是构造器或一个多参数方法时,
+	最好的方式是使用qualifiers
+	7,可以定义自己的qualifier注解使用
+
+
+@Resource的作用和用法
+@Resource 的作用相当于 @Autowired,只不过 @Autowired 按 byType 自动注入，面 @Resource 默认按 byName自动注入罢了。
+@Resource 有两个属性是比较重要的，分别是 name和 type,Spring将 @Resource 注释的 name属性解析为 Bean的名字，
+而 type属性则解析为 Bean的类型。所以如果使用 name属性，则使用 byName的自动注入策略，而使用 type属性时则使用 byType
+自动注入策略。如果既不指定 name也不指定 type属性，这时将通过反射机制使用 byName自动注入策略。
+Resource 注释类位于 Spring发布包的 lib/j2ee/common-annotations.jar类包中，因此在使用之前必须将其加入到项目的类库中。
+来看一个使用 @Resource 的例子：
+	使用 @Resource注释的 Boss.java
+		import javax.annotation.Resource;
+		public class Boss{
+			// 自动注入类型为 Car 的 Bean
+			@Resource
+			private Car car;    // 自动注入 bean 名称为 office 的 Bean
+			@Resource（name = "office"）
+			private Office office;
+		}
+一般情况下，我们无需使用类似于 @Resource（type=Car.class） 的注释方式，因为 Bean 的类型信息可以通过 Java反射从代码中获取。
+要让 JSR-250 的注释生效，除了在 Bean 类中标注这些注释外，还需要在 Spring容器中注册一个负责处理这些注释的BeanPostProcessor:
+<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
+CommonAnnotationBeanPostProcessor 实现了 BeanPostProcessor 接口，它负责扫描使用了 JSR-250 注释的 Bean,并对它们进行相应的操作。

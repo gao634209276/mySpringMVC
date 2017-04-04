@@ -11,19 +11,19 @@ http://blog.csdn.net/ppt0501/article/details/46606745
 
 为了在Spring Web MVC DispatcherServlet中暴露AccountService (如上所述)， 需要在dispatcher的应用上下文中使用以下配置：
 
-<bean name="/AccountService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-    <property name="service" ref="accountService"/>
-    <property name="serviceInterface" value="example.AccountService"/>
-</bean>
+<ioc.bean name="/AccountService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+    <annotation.property name="service" ref="accountService"/>
+    <annotation.property name="serviceInterface" value="example.AccountService"/>
+</ioc.bean>
 
 和在Hessian章节讲的一样，这个exporter定义将通过 DispatcherServlet标准的映射工具暴露出来。
 
 做为可选项, 在你的根应用上下文中(比如'WEB-INF/applicationContext.xml')创建一个HttpInvokerServiceExporter :
 
-<bean name="accountExporter" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-    <property name="service" ref="accountService"/>
-    <property name="serviceInterface" value="example.AccountService"/>
-</bean>
+<ioc.bean name="accountExporter" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+    <annotation.property name="service" ref="accountService"/>
+    <annotation.property name="serviceInterface" value="example.AccountService"/>
+</ioc.bean>
 
 另外,在'web.xml'中为这个exporter定义一个相应的servlet，其名称与目标exporter bean的名称相匹配:
 
@@ -42,14 +42,14 @@ http://blog.csdn.net/ppt0501/article/details/46606745
 
 同样，从客户端连接业务与你使用Hessian或Burlap时所做的很相似。使用代理，Spring可以将你调用的HTTP POST请求转换成被暴露服务的URL。
 
-<bean id="httpInvokerProxy" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
-    <property name="serviceUrl" value="http://remotehost:8080/remoting/AccountService"/>
-    <property name="serviceInterface" value="example.AccountService"/>
-</bean>
+<ioc.bean id="httpInvokerProxy" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+    <annotation.property name="serviceUrl" value="http://remotehost:8080/remoting/AccountService"/>
+    <annotation.property name="serviceInterface" value="example.AccountService"/>
+</ioc.bean>
 
 就象上面说的一样，你可以选择使用你想使用的HTTP客户端。缺省情况下，HttpInvokerProxy使用J2SE的HTTP功能，但是你也可以通过设置httpInvokerRequestExecutor属性选择使用Commons HttpClient：
 
-<property name="httpInvokerRequestExecutor">
-    <bean class="org.springframework.remoting.httpinvoker.CommonsHttpInvokerRequestExecutor"/>
-</property>
+<annotation.property name="httpInvokerRequestExecutor">
+    <ioc.bean class="org.springframework.remoting.httpinvoker.CommonsHttpInvokerRequestExecutor"/>
+</annotation.property>
 

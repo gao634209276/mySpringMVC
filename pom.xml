@@ -55,6 +55,7 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.5.3</version>
 		</dependency>
+		<!--jsr330标准注解-->
 		<dependency>
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>

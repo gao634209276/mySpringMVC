@@ -29,8 +29,8 @@ public class BeanTest {
 		// 方法1,使用传统方式去加载beans.xml,每次请求时加载
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 		//如果是两个以上:
-		applicationContext = new ClassPathXmlApplicationContext(new String[]{"applicationContext.xml", "config.xml"});
-		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml", "config.xml");
+		applicationContext = new ClassPathXmlApplicationContext(new String[]{"applicationContext.xml", "annotation/config.xml"});
+		applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml", "annotation/config.xml");
 		//或者用通配符:
 		applicationContext = new ClassPathXmlApplicationContext("classpath:/*.xml");
 

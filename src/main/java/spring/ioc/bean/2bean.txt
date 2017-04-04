@@ -1,0 +1,171 @@
+专题二 Bean
+=====================================================
+Bean配置项
+Bean的作用域
+Bean的生命周期
+Bean的自动装载
+Resources&ResourceLoader
+
+
+Bean配置项
+-----------------------------------------------------
+	Id
+	Class
+	Scope
+	Constructor arguments
+	Properties
+	Autowiring mode
+	lazy-initialization mode
+	Initialization/destruction method
+相关参考:
+	http://www.tuicool.com/articles/MjeMrqE
+	http://blog.csdn.net/mrwuyi/article/details/51564248
+	http://blog.csdn.net/u013468915/article/details/52235115
+
+Bean作用域
+-----------------------------------------------------
+	singleton:单例,指一个Bean容器中只存在一份
+	prototype:每次请求(每次使用)创建新的实例,destroy方式不生效
+	request:每次http请求创建一个实例且仅在当前request内有效
+	session:同上,每次http请求创建,当前session内有效
+	global session:基于portlet的web中有效(portlet定义了global session),如果是在web中,同session
+	例子:
+	See:spring/ioc.bean/BeanScope.java
+	resources/ioc.bean/spring-beanScope.xml
+	test/java/ioc.bean/TestBeanScope.java
+相关参考:
+	http://blog.csdn.net/fhx007/article/details/7016694
+	http://blog.csdn.net/sunzheng12345/article/details/8445316
+	http://www.cnblogs.com/maybo/p/5189474.html
+	http://blog.itpub.net/25261409/viewspace-1055868/
+
+
+Bean的生命周期
+-----------------------------------------------------
+生命周期有定义-->初始化-->使用-->销毁四个阶段
+1,定义
+	在spring配置文件中通过<ioc.bean>定义
+2,初始化
+	方式1:<ioc.bean>中配置init-method
+	方式2:实现beans.factory.InitializingBean接口覆盖afterPropertiesSet方法
+	方式3:<beans>中配置default-init-method
+3,使用
+4,销毁
+	方式1:<ioc.bean>中配置destroy-method="xxx"
+	方式2:实现beans.factory.DisposableBean接口覆盖destroy-method
+	方式3:<beans>中配置default-destroy-method
+
+如果bean实现了InitializingBean接口/DisposableBean接口或者在<ioc.bean>中配置init-method/destroy-method,
+那么在<beans>中配置的default方法将会被覆盖.
+其执行顺序是接口实现的方法先生效,然后<ioc.bean>标签的方法执行
+详情参考:
+	http://www.cnblogs.com/zrtqsk/p/3735273.html
+	http://blog.csdn.net/qq_33642117/article/details/51924653
+	http://blog.csdn.net/feihong247/article/details/7798474
+	http://997004049-qq-com.iteye.com/blog/1729793
+	http://www.cnblogs.com/caoyc/p/5624417.html
+	http://m.blog.csdn.net/article/details?id=52132996
+
+
+Bean的自动装载(Autowiring)
+-----------------------------------------------------
+No:不做任何操作
+byName:根据属性名称装配.此选项将检查容器并根据名字查找与属性完全一致的bean,并将其与属性自动装配
+byType:如果容器中存在一个与指定属性类型相同的bean,那么将与该属性自动装配;
+	如果存在多个该类型的bean,那么跑异常,并指出不能使用byType方式自动装配;
+	如果没有找到匹配的bean,则什么事都不发生.
+Constructor:与byType方式类似,不同之处在于它应用于构造器参数.
+	如果容器中没有找到与构造器参数类型一致的bean,那么抛异常
+例子:
+	resource/ioc.bean/spring-autoWiring.xml
+	default-autowire=byName/byType/constructor
+	spring/ioc.bean/autowiring/AutoWiringService.java
+	test/spring/ioc.bean/autowiring/TestAutoWiring.java
+使用byType方式,<ioc.bean>不用配置id仅通过class匹配
+使用constructor装配,<ioc.bean>可以不配id和name
+相关参考:
+	http://www.cnblogs.com/zhongkl/archive/2011/06/03/2071257.html
+	http://blog.csdn.net/travel_1/article/details/50956896
+
+
+Aware
+-----------------------------------------------------
+	Spring中提供了一些Aware结尾的接口,实现Aware接口的bean在被初始化后,可以获取相应资源
+	通过Aware接口,可以对Spring相应资源进行操作(一定要慎重)
+	为对Spring进行简单的扩展提供了方便的入口
+Aware感知特性
+	Aware，即感知，是Spring IOC的一个特性，
+	当 我们自定义的bean实现了对应的Aware接口时如(BeanFactoryAware)，
+	spring(BeanFactory工厂)会在bean实例化(getBean)阶段回调该setBeanFactory方法注入对应的属性，
+	注入BeanFactory实例(也就是this),即为该bean增强一定功能。
+Aware的所有子类接口，以下列出几个主要子类接口作用。
+	ApplicationContextAware：给实现该接口的bean注入ApplicationContext容器。
+	ApplicationEventPublisherAware：给实现该接口的bean注入ApplicationEventPublisher对象，以供分发事件使用。
+	BeanClassLoaderAware：给实现该接口的bean注入该类的类加载器。
+	BeanFactoryAware：给实现该接口的bean注入当前BeanFactory容器，此时该bean就持有BeanFactory容器功能。
+	BeanNameAware：给实现该接口的bean注入bean的名称。
+
+源码过程See:http://blog.csdn.net/java2000_wl/article/details/7378025
+例子:
+	建立一个类实现BeanNameAware和ApplicationContextAware接口，
+	See:spring/ioc.bean/aware/SpringContextUtil.java
+	初始化需要设置：default-lazy-init="false"
+	创建bean.xml文件
+	See:resources/ioc.bean/spring-aware.xml
+	测试类:
+	test/java/spring/ioc.bean/aware/TestAware.java
+	最后ApplicationUtil实例被注入了ApplicationContext容器和它的名字。
+	接下来ApplicationUtil可以操作成员变量ApplicationContext的自有的功能。
+NameAware例子:
+	See:spring/ioc.bean/aware/MyBeanNameAware.java
+	resources/ioc.bean/spring-aware.xml
+	test/java/spring/ioc.bean/aware/TestAware.java
+相关参考:
+	http://blog.csdn.net/java2000_wl/article/details/7378025
+	http://blog.csdn.net/ilovejava_2010/article/details/7953582
+	http://www.sxt.cn/info-6234-u-8934.html
+	http://blog.csdn.net/javaloveiphone/article/details/52143126
+
+
+
+Resources&ResourceLoader
+-----------------------------------------------------
+Resources 针对于资源文件的统一接口
+	UrlResource:URL对应的资源,根据一个URL地址即可构建
+	ClassPathResource:获取类路径下的资源文件
+	FileSystemResource:获取文件系统里的资源
+	ServletContextResource:ServletContext封装的资源,用于访问ServletContext环境的资源
+	InputStreamResource:针对于输入流封装的资源
+	ByteArrayResource:针对于字节数组封装的资源
+例子:
+	spring/ioc.bean/resource/MoocResource.java
+	resources/spring/ioc.bean/spring-resource.xml
+	test/java/spring/ioc.bean/resource/TestResource.java
+
+详细参考:
+	http://www.importnew.com/17655.html
+	http://sishuok.com/forum/blogPost/list/0/2457.html#7105
+	http://www.cnblogs.com/doit8791/p/5774743.html
+	http://blog.csdn.net/supportuat/article/details/50931311
+
+ResourceLoader接口
+ResourceLoader接口用于返回Resource对象；其实现可以看作是一个生产Resource的工厂类。
+	getResource接口用于根据提供的location参数返回相应的Resource对象；而getClassLoader则返回加载这些Resource的ClassLoader。
+	Spring提供了一个适用于所有环境的DefaultResourceLoader实现，可以返回ClassPathResource、UrlResource；
+	还提供一个用于web环境的ServletContextResourceLoader，它继承了DefaultResourceLoader的所有功能，
+	又额外提供了获取ServletContextResource的支持。
+
+	ResourceLoader在进行加载资源时需要使用前缀来指定需要加载：
+	“classpath:path”表示返回ClasspathResource，
+	“http://path”和“file:path”表示返回UrlResource资源，如果不加前缀则需要根据当前上下文来决定，
+	DefaultResourceLoader默认实现可以加载classpath资源，
+
+	对于目前所有ApplicationContext都实现了ResourceLoader，因此可以使用其来加载资源。
+
+	ClassPathXmlApplicationContext：不指定前缀将返回默认的ClassPathResource资源，否则将根据前缀来加载资源；
+	FileSystemXmlApplicationContext：不指定前缀将返回FileSystemResource，否则将根据前缀来加载资源；
+	WebApplicationContext：不指定前缀将返回ServletContextResource，否则将根据前缀来加载资源；
+	其他：不指定前缀根据当前上下文返回Resource实现，否则将根据前缀来加载资源。
+
+ResourceLoaderAware接口
+ResourceLoaderAware是一个标记接口，用于通过ApplicationContext上下文注入ResourceLoader。

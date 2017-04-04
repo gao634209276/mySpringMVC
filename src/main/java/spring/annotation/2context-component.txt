@@ -1,0 +1,208 @@
+前面的例子我们都是使用XML的bean定义来配置组件。在一个稍大的项目中，通常会有上百个组件，
+如果这些这组件采用xml的bean定义来配置，显然会增加配置文件的体积，查找及维护起来也不太方便。
+
+Bean管理的注解实现及例子
+	Classpath扫描与组件管理
+	类的自动检测与注册Bean
+	<context:annotation-config/>
+	@Component,@Repository,@Service,@Controller
+	@Required
+	@Autowired
+	@Qualifier
+	@Resource
+
+Classpath扫描与组件管理
+----------------------------------------------------------------------------------
+spring2.5为我们引入了组件自动扫描机制，
+他可以在类路径底下寻找标注了@Component、@Service、@Controller、@Repository注解的类，并把这些类纳入进spring容器中管理。
+它的作用和在xml文件中使用bean节点配置组件是一样的。要使用自动扫描机制，我们需要打开以下配置信息:
+	<?xml version="1.0" encoding="UTF-8"?>
+	<beans xmlns="http://www.springframework.org/schema/beans"
+	       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	       xmlns:context="http://www.springframework.org/schema/context"
+	       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	        http://www.springframework.org/schema/beans/spring-beans.xsd
+	        http://www.springframework.org/schema/context
+	        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	    <context:component-scan base-package="spring.annotation"/>
+	</beans>
+其中base-package为需要扫描的包(含子包)。
+
+Spring JavaConfig项目提供了很多特性,包括使用java而不是XML定义bean,比如@Configuration,@Bean,@Import,@DependsOn
+@Component是一个通用注解,可以用于任何bean,标识该类为spring组件
+@Repository,@Service,@Controller是更有针对性的注解
+	@Repository通常用于注解DAO类,即持久层
+	@Service通常用于注解Service类,即服务层
+	@Controller通常用于Controller类,即控制层(MVC)
+
+元注解(Meta-annotations):负责注解其他注解。
+Java5.0定义了4个标准的meta-annotation类型，它们被用来提供对其它 annotation类型作说明。Java5.0定义的元注解：
+	1.@Target,
+	2.@Retention,
+	3.@Documented,
+	4.@Inherited
+这些类型和它们所支持的类在java.lang.annotation包中可以找到。
+许多Spring提供的注解可作为自己的代码,即"元数据注解",元注解是一个简单的注解,可以应用到另一个注解
+除了value(),元注解还可以有其它的属性,允许定制
+
+
+类的自动检测及Bean的注册
+----------------------------------------------------------------------------------
+Spring可以自动检测类并注册Bean到ApplicationContext中
+<context:annotation-config/>
+	通过在基于XML的Spring配置如下标签(请注意包含上下文命名空间)
+	<context:annotation-config/>仅会查找在同一个applicationContext中的bean注解
+
+为了能够检测这些类并注册相应的Bean,需要下面内容:
+	<context:component-scan>包含<context:annotation-config>,通常在使用前者后,不用在使用后者
+	AutowiredAnnotationBeanPostProcessor和CommonAnnotationBeanPostProcessor也会被包含进来
+理解:
+	component-scan基于注解的自动装配,Spring特殊对待我们所定义的Bean里的某一组注解,并使用这些注解指导Bean的装配。
+	即使<context:annotation-config>有助于完全消除Spring配置中的 <annotation.property>和<constructor-arg>元素,
+	我们仍然需要使用<ioc.bean>元素显示定义Bean.
+	<context:component-scan> 元素除了完成与<context:annotation-config>一样的工作外,
+	还允许Spring自动检测Bean和定义Bean。这意味着不使用<ioc.bean>元素，Spring中的大多数或者所有Bean都能够实现定义和装配。
+	默认情况下,<context:component-scan>查找使用构造型(stereotype)注解所标注的类，
+
+
+使用过滤组件进行自定义扫描
+<context:component-scan>在如何扫描获得候选Bean方面非常灵活,默认情况下,自动发现并注册bean的条件是:
+	使用@Component,@Repository,@Service,@Controller注解或者使用@Component的自定义注解
+	通过为<context:component-scan>配置<context:include-filter>和/或者<context:exclude-filter>子元素，
+	我们可以随意调整扫描行为。如:下面例子的XML配置忽略所有的@Repository注解并用"Stub"代替
+		<beans>
+			<context:component-scan base-package="org.example">
+				<context:include-filter type="regex" expression=".*Stub.*Repository"/>
+				<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+			<context:component-scan/>
+		<beans/>
+	<context:include-filter>的type和expression属性一起协作来定义组件扫描策略。我们还可以选择下面任意一种过滤器。
+	关于type:
+		1、type=annotation，必须由注解，过滤器扫描使用指定注解所标注的那些类。
+			具体来说，就是@Component，@Service，@Repository，@Controller这几个构造型注解所在的类。
+			expression=有4个值，这种限定方式是必须有@Component等注解的。
+			org.springframework.stereotype.Component;
+			org.springframework.stereotype.Controller;
+			org.springframework.stereotype.Repository;
+			org.springframework.stereotype.Service;
+		2、type=assignable，注解不是必要的，过滤器扫描派生于expression属性所指定类型的那些类，所谓的派生，具体的实现类的路径。
+			expression=接口类路径
+			如:spring.example.XxxService,表示所有继承或扩展XxxService的类
+			assignable采用目标类是否继承或扩展某个特定类进行过滤
+		3、type=aspectj，过滤器扫描与expression属性所指定的AspectJ表达式所匹配的那些类。
+			如:spring.example..*Service+,表示所有类名以Service结束的类以及继承或扩展他们的类.
+			该类型采用AspectJ表示式进行过滤
+		4、type=custom，使用自定义的org.springframework.core.type.TypeFilter实现类，该类由expression属性指定。
+			如:spring.example.XxxTypeFilter,表示采用XxxFilter通过代码方式定义过滤规则.
+			该类必须实现org.springframework.core.type.TypeFilter接口
+		5、type=regex，过滤器扫描类的名称与expression属性所指定的正则表达式所匹配的那些类。
+			如:spring\.example\..*,表示spring.example包下的类.
+			通过正则表达式根据类名进行过滤
+	还可以使用use-default-filters="false"禁用自动发现与注册
+
+定义Bean
+----------------------------------------------------------------------------------
+	扫描过程中组件被自动检测,那么Bean名称时有BeanNameGenerator生成的
+		(@Component,@Repository,@Service,@Controller都会有个name属性用于显示设置Bean Name)
+	可以自定义bean命名策略,实现BeanNameGenerator接口,并一定要包含一个无参数构造器
+		<beans>
+			<context:component-scan base-package="org.example"
+				name-generator="org.example.MyNameGenerator"/>
+		<beans/>
+	解释:
+	AnnotationBeanNameGenerator是bean的默认命名策略，他实现了BeanNameGenerator接口。
+	在Service里面，如果不写bean的名称，那么默认的名曾是类名，但是第一个字母是小写的。
+	spring的源代码，buildDefaultBeanName方法首先了bean名称小写的作用。
+	因此，可以写一个类继承自AnnotationBeanNameGenerator，重写buildDefaultBeanName方法。
+		public class MyNameGenerator extends AnnotationBeanNameGenerator {
+			@Override
+			protected String buildDefaultBeanName(BeanDefinition definition) {
+				return definition.getBeanClassName();
+			}
+		}
+	然后在扫描配置中需要添加自己的命名策略类,如上面xml配置.
+	然后业务相关的bean不用写bean的名称了，ApplicationContext.getBean("类的全路径")就可以得到类的实例了。
+	DefaultBeanNameGenerator生成器
+		Spring除了实现了AnnotationBeanNameGenerator生成器外，
+		还有个org.springframework.beans.factory.support.DefaultBeanNameGenerator生成器，
+		它为了防止Bean的ID重复，它的生成策略是类路径+分隔符+序号
+		如com.wjx.betalot.performer.impl.Sonnet注册为Bean的ID是com.wjx.betalot.performer.impl.Sonnet#0，
+		这个生成器不支持自定义ID，否则抛出异常。
+
+
+作用域Scope
+	通常情况下自动查找的Spring组件,其scope是singleton,Spring2.5提供了一个表示scope的注解@Scope
+	也可以自定义scope策略,实现ScopeMetadataResolver接口并提供一个无参构造器
+		<beans>
+            <context:component-scan base-package="org.example"
+                scope-resolver="org.example.MyScopeResolver"/>
+        <beans/>
+	scope-resolver:这个属性跟name-generator有点类似，
+	它是基于接口ScopeMetadataResolver的，实现resolveScopeMetadata方法，
+	目的是为了将@Scope(value="",proxyMode=ScopedProxyMode.NO,scopeName="")的配置解析成为一个ScopeMetadata对象,
+	Spring这里也提供了两个实现，我们一起看下。首先是org.springframework.context.annotation.AnnotationScopeMetadataResolver中，
+		public ScopeMetadata resolveScopeMetadata(BeanDefinition definition) {
+		        ScopeMetadata metadata = new ScopeMetadata();
+		        if (definition instanceof AnnotatedBeanDefinition) {
+		            AnnotatedBeanDefinition annDef = (AnnotatedBeanDefinition) definition;
+		            AnnotationAttributes attributes = AnnotationConfigUtils.attributesFor(annDef.getMetadata(), this.scopeAnnotationType);
+		            if (attributes != null) {
+		                metadata.setScopeName(attributes.getAliasedString("value", this.scopeAnnotationType, definition.getSource()));
+		                ScopedProxyMode proxyMode = attributes.getEnum("proxyMode");
+		                if (proxyMode == null || proxyMode == ScopedProxyMode.DEFAULT) {
+		                    proxyMode = this.defaultProxyMode;
+		                }
+		                metadata.setScopedProxyMode(proxyMode);
+		            }
+		        }
+		        return metadata;
+		    }
+	对比一下org.springframework.context.annotation.Jsr330ScopeMetadataResolver中的实现：
+		public ScopeMetadata resolveScopeMetadata(BeanDefinition definition) {
+		        ScopeMetadata metadata = new ScopeMetadata();
+		        metadata.setScopeName(BeanDefinition.SCOPE_PROTOTYPE);
+		        if (definition instanceof AnnotatedBeanDefinition) {
+		            AnnotatedBeanDefinition annDef = (AnnotatedBeanDefinition) definition;
+		            Set<String> annTypes = annDef.getMetadata().getAnnotationTypes();
+		            String found = null;
+		            for (String annType : annTypes) {
+		                Set<String> metaAnns = annDef.getMetadata().getMetaAnnotationTypes(annType);
+		                if (metaAnns.contains("javax.inject.Scope")) {
+		                    if (found != null) {
+		                        throw new IllegalStateException("Found ambiguous scope annotations on ioc.bean class [" +
+		                                definition.getBeanClassName() + "]: " + found + ", " + annType);
+		                    }
+		                    found = annType;
+		                    String scopeName = resolveScopeName(annType);
+		                    if (scopeName == null) {
+		                        throw new IllegalStateException(
+		                                "Unsupported scope annotation - not mapped onto Spring scope name: " + annType);
+		                    }
+		                    metadata.setScopeName(scopeName);
+		                }
+		            }
+		        }
+		        return metadata;
+		    }
+
+scoped-proxy
+	scope代理有三个值可选:no(默认值)，interfaces(接口代理)，targetClass（类代理），
+	那什么时候需要用到scope代理呢，举个例子，
+    	我们知道Bean的作用域scope有singleton，prototype，request,session,
+    	那有这么一种情况，当你把一个session或者request的Bean注入到singleton的Bean中时，
+    	因为singleton的Bean在容器启动时就会创建A，而session的Bean在用户访问时才会创建B，
+    	那么当A中要注入B时，有可能B还未创建，这个时候就会出问题，那么代理的时候来了，B如果是个接口，就用interfaces代理，是个类则用targetClass代理。
+    	这个例子出处：http://www.bubuko.com/infodetail-1434289.html。
+		<beans>
+			<context:component-scan base-package="org.example"
+				scoped-proxy="interfaces"/>
+		<beans/>
+ps:scope-resolver与scoped-proxy只能配置一个,配置了scope-resolver后你要使用代理，可以配置@Scope总的proxyMode属性项
+
+Bean定义及作用域
+例子See:
+	spring.annotation.BeanAnnotation.java
+	annotation/spring-annotation.xml
+	test/java/spring.annotation.TestBeanAnnotation.java
+

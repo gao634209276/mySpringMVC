@@ -28,7 +28,7 @@
 		说明：实现该接口的setApplicationContext(ApplicationContext context)方法，并保存ApplicationContext 对象。
 		Spring初始化时，会通过该方法将ApplicationContext对象注入。
 		以下是实现ApplicationContextAware接口方式的代码，前面两种方法类似：
-		See:spring/bean/aware/SpringContextUtil.java
+		See:spring/ioc.bean/aware/SpringContextUtil.java
 		虽然，spring提供的后三种方法可以实现在普通的类中继承或实现相应的类或接口来获取spring 的ApplicationContext对象，
 		但是在使用是一定要注意实现了这些类或接口的普通java类一定要在Spring 的配置文件applicationContext.xml文件中进行配置。
 		否则获取的ApplicationContext对象将为null。

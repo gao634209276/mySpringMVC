@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/context
+	   http://www.springframework.org/schema/context/spring-context.xsd
+	   http://www.springframework.org/schema/mvc
+	   http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+	<!-- 将多个配置文件读取到容器中，交给Spring管理 -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<!-- 这里支持多种寻址方式：classpath和file -->
+				<value>classpath:/conf/mq.properties</value>
+				<!-- 推荐使用file的方式引入，这样可以将配置和代码分离 -->
+				<!--<value>file:D:/xx/demo-mq.spring.spring.annotation.javabased.properties</value>-->
+			</list>
+		</property>
+	</bean>
+
+	<!-- 使用MQ中的配置 -->
+	<bean id="MQJndiTemplate" class="org.springframework.jndi.JndiTemplate">
+		<property name="environment">
+			<props>
+				<prop key="java.naming.factory.initial">${mq.java.naming.factory.initial}</prop>
+				<prop key="java.naming.provider.url">${mq.java.naming.provider.url}</prop>
+				<prop key="java.naming.security.principal">${mq.java.naming.security.principal}</prop>
+				<prop key="java.naming.security.credentials">${mq.java.naming.security.credentials}</prop>
+				<prop key="userName">${mq.java.naming.security.principal}</prop>
+				<prop key="password">${mq.java.naming.security.credentials}</prop>
+			</props>
+		</property>
+	</bean>
+
+
+</beans>

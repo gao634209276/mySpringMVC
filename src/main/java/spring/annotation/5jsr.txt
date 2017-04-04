@@ -1,0 +1,87 @@
+@Resource
+1,Spring还支持使用JSR-250@Resource注解的变量或setter方法,这是一种在JavaEE 5和6的通用模式,Spring管理的对象也支持这种模式
+2,@Resource有一个name属性,并且默认Spring解释该值作为被注入bean的名称
+如:
+	public class SimpleMovieLister{
+		private MovieFinder movieFinder;
+		@Resource(name = "myMovieFinder")
+		public void setMovieFinder(MovieFinder movieFinder){
+			this.movieFinder = movieFinder;
+		}
+	}
+3,如果没有显示地指定@Resource的name,默认的名称是从属性名或者setter方法得出
+4,注解提供的名字被解析为一个bean的名称,这是有ApplicationContext中的CommonAnnotationBeanPostProcessor发现并处理的
+
+
+@PostConstruct 和 @PreDestroy
+CommonAnnotationBeanPostProcessor不仅能识别JSR-250中的生命周期注解@Resource,
+在Spring2.5中引入支持初始化回调和销毁回调,前提是
+CommonAnnotationBeanPostProcessor是Spring的ApplicationContext中注册的
+	public class CachingMovieLister{
+		@PostConstruct
+		public void populateMovieCache(){
+			// populates the move cache upon initialization...
+		}
+
+		@PreDestroy
+		public void clearMovieCache(){
+			// clears the move cache upon destruction ...
+		}
+	}
+例子see:spring.annotation.jsr.Jsr*.java
+
+使用JSR330标准注解
+	从Spring3.0开始支持JSR330标准注解(依赖注入注解),其扫描方式与SPring注解一致
+	使用JSR330需要依赖javax.inject包
+
+@Inject
+	@Inject等效于@Autowired,可以适用于类,属性,方法,构造器
+		public class SimpleMovieLister{
+			private MovieFinder movieFinder;
+			@Inject
+			public void setMovieFinder(MovieFinder movieFinder){
+				this.movieFinder = movieFinder;
+			}
+		}
+
+@Named
+	如果想使用特定名称进行依赖注入,使用@Named
+	@Named与@Component是等效的
+		public class SimpleMovieLister{
+			private MovieFinder movieFinder;
+			@Inject
+			public void setMovieFinder(@Named("main")MovieFinder movieFinder){
+				this.movieFinder = movieFinder;
+			}
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

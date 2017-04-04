@@ -29,7 +29,7 @@ DI：（依赖注入）是一种实现方式
 Bean配置：
 -----------------------------------------------
 See: resources/ioc/ioc-set.xml
-	<bean id="oneInterface" class="spring.ioc.interfaces.OneInterfaceImpl"/>
+	<ioc.bean id="oneInterface" class="spring.ioc.interfaces.OneInterfaceImpl"/>
 测试类：
 	See: test/java/spring/ioc/TestOneInterface.testSay()
 
@@ -62,7 +62,7 @@ Dao层一般提供处理数据库等数据源的通用CRUD操作的方法
 	这里模拟一个功能非常简单的Service和Dao接口以及对应的实现,
 	并且将Dao实现类Bean注入到Service实现类中.
 	其中构造注入Bean要先实例化,如果有含参构造器而没构造注入,需要先明确声明一个无参构造器
-	<property/>属性名称要与setInjectionDAO方法名称对应相同
+	<annotation.property/>属性名称要与setInjectionDAO方法名称对应相同
 	<constructor-arg/>构造注入,需要一个与被注入bean类型的含参构造器
 	值可以用value直接赋值,也可以用ref引用相同id或name的bean
 

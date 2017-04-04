@@ -7,12 +7,12 @@
 	<!--被注入的bean-->
 	<bean id="injectionDAO" class="spring.ioc.injection.dao.InjectionDAOImpl"/>
 
-	<!--bean中设值注入(property)和构造注入(constructor-arg)-->
+	<!--bean中设值注入(annotation.property)和构造注入(constructor-arg)-->
 	<bean id="injectionService" class="spring.ioc.injection.service.InjectionServiceImpl">
 		<!--设值注入,Bean要先实例化,如果有含参构造器而没构造注入,需要先明确声明一个无参构造器-->
 		<!--property属性名称要与setInjectionDAO方法名称对应相同,ref引用该id或name的bean-->
 		<property name="injectionDAO" ref="injectionDAO"/>
-		<!--<property name="injectionDAO" value="xxx"/>-->
+		<!--<annotation.property name="injectionDAO" value="xxx"/>-->
 
 		<!--构造注入,需要一个与被注入bean类型的含参构造器-->
 		<!--arg名称要与对应构造器的参数名称相同-->

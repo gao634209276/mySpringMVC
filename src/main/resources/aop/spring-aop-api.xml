@@ -20,48 +20,48 @@
      
      
      
-<!--     <bean id="bizLogicImplTarget" class="spring.aop.api.BizLogicImpl"></bean> -->
+<!--     <ioc.bean id="bizLogicImplTarget" class="spring.aop.api.BizLogicImpl"></ioc.bean> -->
 
-<!-- 	<bean id="pointcutBean" class="org.springframework.aop.support.NameMatchMethodPointcut"> -->
-<!-- 		<property name="mappedNames"> -->
+<!-- 	<ioc.bean id="pointcutBean" class="org.springframework.aop.support.NameMatchMethodPointcut"> -->
+<!-- 		<annotation.property name="mappedNames"> -->
 <!-- 			<list> -->
 <!-- 				<value>sa*</value> -->
 <!-- 			</list> -->
-<!-- 		</property> -->
-<!-- 	</bean> -->
+<!-- 		</annotation.property> -->
+<!-- 	</ioc.bean> -->
 	
-<!-- 	<bean id="defaultAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor"> -->
-<!-- 		<property name="advice" ref="moocBeforeAdvice" /> -->
-<!-- 		<property name="pointcut" ref="pointcutBean" /> -->
-<!-- 	</bean> -->
+<!-- 	<ioc.bean id="defaultAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor"> -->
+<!-- 		<annotation.property name="advice" ref="moocBeforeAdvice" /> -->
+<!-- 		<annotation.property name="pointcut" ref="pointcutBean" /> -->
+<!-- 	</ioc.bean> -->
 	
-<!-- 	<bean id="bizLogicImpl" class="org.springframework.aop.framework.ProxyFactoryBean"> -->
-<!-- 		<property name="target"> -->
-<!-- 			<ref bean="bizLogicImplTarget"/> -->
-<!-- 		</property> -->
-<!-- 		<property name="interceptorNames"> -->
+<!-- 	<ioc.bean id="bizLogicImpl" class="org.springframework.aop.framework.ProxyFactoryBean"> -->
+<!-- 		<annotation.property name="target"> -->
+<!-- 			<ref ioc.bean="bizLogicImplTarget"/> -->
+<!-- 		</annotation.property> -->
+<!-- 		<annotation.property name="interceptorNames"> -->
 <!-- 			<list> -->
 <!-- 				<value>defaultAdvisor</value> -->
 <!-- 				<value>moocAfterReturningAdvice</value> -->
 <!-- 				<value>moocMethodInterceptor</value> -->
 <!-- 				<value>moocThrowsAdvice</value> -->
 <!-- 			</list> -->
-<!-- 		</property> -->
-<!-- 	</bean>   -->
+<!-- 		</annotation.property> -->
+<!-- 	</ioc.bean>   -->
         
         
 
-<!-- 	<bean id="bizLogicImplTarget" class="spring.aop.api.BizLogicImpl"></bean> -->
+<!-- 	<ioc.bean id="bizLogicImplTarget" class="spring.aop.api.BizLogicImpl"></ioc.bean> -->
 
-<!-- 	<bean id="bizLogicImpl" class="org.springframework.aop.framework.ProxyFactoryBean"> -->
-<!-- 		<property name="proxyInterfaces"> -->
+<!-- 	<ioc.bean id="bizLogicImpl" class="org.springframework.aop.framework.ProxyFactoryBean"> -->
+<!-- 		<annotation.property name="proxyInterfaces"> -->
 <!-- 			<value>spring.aop.api.BizLogic</value> -->
-<!-- 		</property> -->
-<!-- 		<property name="target"> -->
-<!-- 			<bean class="spring.aop.api.BizLogicImpl"></bean> -->
-<!-- 			<ref bean="bizLogicImplTarget"/> -->
-<!-- 		</property> -->
-<!-- 		<property name="interceptorNames"> -->
+<!-- 		</annotation.property> -->
+<!-- 		<annotation.property name="target"> -->
+<!-- 			<ioc.bean class="spring.aop.api.BizLogicImpl"></ioc.bean> -->
+<!-- 			<ref ioc.bean="bizLogicImplTarget"/> -->
+<!-- 		</annotation.property> -->
+<!-- 		<annotation.property name="interceptorNames"> -->
 <!-- 			<list> -->
 <!-- 				<value>moocBeforeAdvice</value> -->
 <!-- 				<value>moocAfterReturningAdvice</value> -->
@@ -69,8 +69,8 @@
 <!-- 				<value>moocThrowsAdvice</value> -->
 <!-- 				<value>mooc*</value> -->
 <!-- 			</list> -->
-<!-- 		</property> -->
-<!-- 	</bean>   -->
+<!-- 		</annotation.property> -->
+<!-- 	</ioc.bean>   -->
 
 
 

@@ -8,20 +8,20 @@
 RmiServiceExporter 显式地支持使用RMI调用器暴露任何非RMI的服务。
 当然，我们首先需要在Spring容器中设置我们的服务：
 
-	<bean id="accountService" class="example.AccountServiceImpl">
+	<ioc.bean id="accountService" class="example.AccountServiceImpl">
 		<!--其他属性，或者一个DAO对象？-->
-	</bean>
+	</ioc.bean>
 
 然后我们要使用RmiServiceExporter来暴露我们的服务：
 
-	<bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+	<ioc.bean class="org.springframework.remoting.rmi.RmiServiceExporter">
 		<!-- 不一定要与要输出的bean同名-->
-		<property name="serviceName" value="AccountService"/>
-		<property name="service" ref="accountService"/>
-		<property name="serviceInterface" value="example.AccountService"/>
+		<annotation.property name="serviceName" value="AccountService"/>
+		<annotation.property name="service" ref="accountService"/>
+		<annotation.property name="serviceInterface" value="example.AccountService"/>
 		<!--  默认为1199-->
-		<property name="registryPort" value="1199"/>
-	</bean>
+		<annotation.property name="registryPort" value="1199"/>
+	</ioc.bean>
 
 正如你所见，我们覆盖了RMI注册的端口号。通常你的应用服务器也会维护RMI注册，最好不要和它冲突。
 更进一步来说，服务名是用来绑定服务的。所以本例中，服务绑定在rmi://HOST:1199/AccountService。
@@ -44,14 +44,14 @@ Note
 
 为了把服务连接到客户端上，我们将创建一个单独的Spring容器，包含这个简单对象和链接配置位的服务：
 
-	<bean class="example.SimpleObject">
-		<property name="accountService" ref="accountService"/>
-	</bean>
+	<ioc.bean class="example.SimpleObject">
+		<annotation.property name="accountService" ref="accountService"/>
+	</ioc.bean>
 
-	<bean id="accountService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
-		<property name="serviceUrl" value="rmi://HOST:1199/AccountService"/>
-		<property name="serviceInterface" value="example.AccountService"/>
-	</bean>
+	<ioc.bean id="accountService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+		<annotation.property name="serviceUrl" value="rmi://HOST:1199/AccountService"/>
+		<annotation.property name="serviceInterface" value="example.AccountService"/>
+	</ioc.bean>
 
 这就是我们在客户端为支持远程account服务所需要做的。
 Spring将透明的创建一个调用器并且通过RmiServiceExporter使得account服务支持远程服务。

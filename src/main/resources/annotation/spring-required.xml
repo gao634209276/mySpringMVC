@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:annotation-config/>
+
+	<!-- Definition for student bean -->
+	<bean id="student" class="spring.annotation.required.Student">
+		<property name="name" value="Zara"/>
+		<!-- try without passing age and check the result -->
+		<property name="age" value="11"/>
+	</bean>
+
+	<!--配置自定义required注解-->
+	<bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor">
+		<property name="requiredAnnotationType" value="spring.annotation.required.CustomRequired"/>
+	</bean>
+</beans>

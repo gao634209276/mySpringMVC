@@ -59,7 +59,7 @@ Spring支持以下4种类型的过滤方式：
 2.5 @Resource
 	例如：
 	@Resource
-	private DataSource dataSource; // injectthe bean named 'dataSource'
+	private DataSource dataSource; // injectthe ioc.bean named 'dataSource'
 	或者：
 	@Resource(name="dataSource")
 	@Resource(type=DataSource.class)
